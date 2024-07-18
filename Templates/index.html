@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Missing Persons Database</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Missing Persons Database</h1>
+    <a href="{{ url_for('add_person') }}">Add Missing Person</a>
+    <ul>
+        {% for person in persons %}
+        <li>
+            <h2>{{ person.name }} ({{ person.age }})</h2>
+            <img src="{{ person.photo_url }}" alt="{{ person.name }}" width="100">
+            <p>Occupation: {{ person.occupation }}</p>
+            <p>Last Known Location: {{ person.last_known_location }}</p>
+            <p>Contact Info: {{ person.contact_info }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

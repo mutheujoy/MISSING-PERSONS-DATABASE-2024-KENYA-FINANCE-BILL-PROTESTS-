@@ -5,8 +5,8 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///missing_persons.db'
 db = SQLAlchemy(app)
 
-from models import MissingPerson
-
+from app.models import MissingPerson
+ 
 @app.route('/')
 def index():
     persons = MissingPerson.query.all()
@@ -39,5 +39,6 @@ def add_person():
     return render_template('add_person.html')
 
 if __name__ == '__main__':
-    db.create_all()
+    with app.app_context():
+        db.create_all()
     app.run(debug=True)

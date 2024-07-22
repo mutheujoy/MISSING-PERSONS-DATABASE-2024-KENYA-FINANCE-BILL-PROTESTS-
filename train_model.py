@@ -42,5 +42,5 @@ def train_model(train_dir, val_dir):
     model.fit(train_generator, validation_data=val_generator, epochs=10)
     model.save('custom_model.h5')
 
-# Example usage
+
 # train_model('path/to/train_data', 'path/to/val_data')

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Missing Persons 2024">
+    <meta name="author" content="Missing Persons 2024">
+    <title>Missing Persons 2024</title>
+
+    <!-- Favicons-->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.jpg') }}" type="image/x-icon">
+
+    <!-- GOOGLE WEB FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+
+    <!-- BASE CSS -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+	<link href="{{ url_for('static', filename='css/vendors.css') }}" rel="stylesheet">
+
+    <!-- ALTERNATIVE COLORS CSS -->
+	<link href="#" id="colors" rel="stylesheet">
+
+</head>
+
+<body>
+	
+	<div id="page" class="theia-exception">
+		
+	<header class="header_in">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-12">
+					<div id="logo">
+						<a href="" title="Missing Persons 2024">
+                            <img src="{{ url_for('static', filename='img/logo.jpg') }}" width="105" height="50" alt="" class="logo_normal">
+                           </a>
+					</div>
+				</div>
+				<div class="col-lg-9 col-12">
+                    <ul id="top_menu">
+                        <li><a href="{{ url_for('add_person') }}" class="btn_add">+ Add Missing Person</a></li>
+                    </ul>
+					<!-- /top_menu -->
+					<a href="#menu" class="btn_mobile">
+						<div class="hamburger hamburger--spin" id="hamburger">
+							<div class="hamburger-box">
+								<div class="hamburger-inner"></div>
+							</div>
+						</div>
+					</a><nav id="menu" class="main-menu">
+                        <ul>
+                            <li><span><a href="/" target="_parent">Home</a></span></li>
+                            <li><span><a href="{{ url_for('all_listing') }}" target="_parent">Missing Persons List</a></span></li>
+                            <li><span><a href="{{ url_for('gallery') }}" target="_parent">Missing Persons Gallery</a></span></li>
+                        </ul>
+                    </nav>
+				</div>
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+		<!-- search_mobile -->
+		<div class="layer"></div>
+		<div id="search_mobile">
+			<a href="#" class="side_panel"><i class="icon_close"></i></a>
+			<div class="custom-search-input-2">
+				<div class="form-group">
+					<input class="form-control" type="text" placeholder="What are you looking..">
+					<i class="icon_search"></i>
+				</div>
+				<div class="form-group">
+					<input class="form-control" type="text" placeholder="Where">
+					<i class="icon_pin_alt"></i>
+				</div>
+				<select class="wide">
+					<option>All Categories</option>
+                    <option>Men</option>
+                    <option>Women</option>
+                    <option>Children</option>
+				</select>
+				<input type="submit" value="Search">
+			</div>
+		</div>
+		<!-- /search_mobile -->
+	</header>
+	<!-- /header -->
+	
+	<main>
+		<div id="results">
+		   <div class="container">
+			   <div class="row">
+				   <div class="col-lg-10 col-md-8 col-2">
+					   <a href="#0" class="side_panel btn_search_mobile"></a> <!-- /open search panel -->
+						<div class="row g-0 custom-search-input-2 inner">
+							<div class="col-lg-4">
+								<div class="form-group">
+									<input class="form-control" type="text" placeholder="What are you looking for...">
+									<i class="icon_search"></i>
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="form-group">
+									<input class="form-control" type="text" placeholder="Where">
+									<i class="icon_pin_alt"></i>
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<select class="wide">
+									<option>All Gender</option>	
+									<option>Male</option>
+									<option>Female</option>
+								</select>
+							</div>
+							<div class="col-lg-1">
+								<input type="submit" value="Search">
+							</div>
+						</div>
+				   </div>
+			   </div>
+			   <!-- /row -->
+		   </div>
+		   <!-- /container -->
+	   </div>
+	   <!-- /results -->
+		
+		<div class="container margin_60_35">
+			<div class="row">
+		
+				<div class="col-lg-12">
+					<div class="row">
+                        {% for person in persons %}
+						<div class="col-md-4">
+							<div class="strip grid">
+								<figure>
+									<a href="#0" class="wish_bt"></a>
+									<a href="detail-missing-person.html"><img src="{{person.photo_url}}" class="img-fluid" alt="">
+										<div class="read_more"><span>Read more</span></div>
+									</a>
+									<small>Missing Person</small>
+								</figure>
+								<div class="wrapper">
+									<h3><a href="detail-missing-person.html">{{ person.name }}</a></h3>
+									<small>Last seen: 27 Old Gloucester St</small>
+									<p>John was last seen near Old Gloucester Street. He was wearing a blue jacket and black jeans. Any information would be helpful.</p>
+									</div>
+							</div>
+						</div>
+						<!-- /strip grid -->
+                {% endfor %}
+					</div>
+					<!-- /row -->
+				</div>
+				<!-- /col -->
+			</div>        
+		</div>
+		<!-- /container -->
+		
+		
+	</main>
+	<!--/main-->
+	
+	<footer class="plus_border">
+		<div class="container margin_60_35">
+			<div class="row justify-content-start">
+				<div class="col-lg-12">
+					<ul id="additional_links">
+						<li><span>© 2024 Missing Persons 2024</span></li>
+					</ul>
+				</div>
+			</div>
+			
+		</div>
+	</footer>
+	<!--/footer-->
+	</div>
+	<!-- page -->
+	
+	
+	
+	<div id="toTop"></div><!-- Back to top button -->
+	
+	<!-- COMMON SCRIPTS -->
+    <script src="{{ url_for('static', filename='js/common_scripts.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/functions.js') }}"></script>
+	<script src="{{ url_for('static', filename='assets/validate.js') }}"></script>
+	
+	<!-- Map -->
+	<script src="https://maps.googleapis.com/maps/api/js"></script>
+	<script src="{{ url_for('static', filename='assets/markerclusterer.js') }}"></script>
+	<script src="{{ url_for('static', filename='assets/map.js') }}"></script>
+	<script src="{{ url_for('static', filename='assets/infobox.js') }}"></script>
+		
+  
+</body>
+</html>

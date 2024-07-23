@@ -1,23 +1,217 @@
-<!doctype html>
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Missing Persons Database</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Missing Persons 2024">
+    <meta name="author" content="Missing Persons 2024">
+    <title>Missing Persons 2024</title>
+
+    <!-- Favicons-->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.jpg') }}" type="image/x-icon">
+
+    <!-- GOOGLE WEB FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+
+    <!-- BASE CSS -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+	<link href="{{ url_for('static', filename='css/vendors.css') }}" rel="stylesheet">
+
+    <!-- ALTERNATIVE COLORS CSS -->
+	<link href="#" id="colors" rel="stylesheet">
+
 </head>
+
 <body>
-    <h1>Missing Persons Database</h1>
-    <a href="{{ url_for('add_person') }}">Add Missing Person</a>
-    <ul>
-        {% for person in persons %}
-        <li>
-            <h2>{{ person.name }} ({{ person.age }})</h2>
-            <img src="{{ person.photo_url }}" alt="{{ person.name }}" width="100">
-            <p>Occupation: {{ person.occupation }}</p>
-            <p>Last Known Location: {{ person.last_known_location }}</p>
-            <p>Contact Info: {{ person.contact_info }}</p>
-        </li>
-        {% endfor %}
-    </ul>
+		
+	<div id="page">
+		
+	<header class="header menu_fixed">
+		<div id="logo">
+			<a href="" title="Missing Persons 2024">
+				<img src="{{ url_for('static', filename='img/logo.jpg') }}" width="105" height="50" alt="" class="logo_normal">
+				<img src="{{ url_for('static', filename='img/logo.jpg') }}" width="105" height="50" alt="" class="logo_sticky">
+			</a>
+		</div>
+		<ul id="top_menu">
+			<li><a href="{{ url_for('add_person') }}" class="btn_add">+ Add Missing Person</a></li>
+		</ul>
+		<!-- /top_menu -->
+		<a href="#menu" class="btn_mobile">
+			<div class="hamburger hamburger--spin" id="hamburger">
+				<div class="hamburger-box">
+					<div class="hamburger-inner"></div>
+				</div>
+			</div>
+		</a>
+		<nav id="menu" class="main-menu">
+		    <ul>
+		        <li><span><a href="" target="_parent">Home</a></span></li>
+		        <li><span><a href="{{ url_for('all_listing') }}" target="_parent">Missing Persons List</a></span></li>
+		        <li><span><a href="{{ url_for('gallery') }}" target="_parent">Missing Persons Gallery</a></span></li>
+		    </ul>
+		</nav>
+	</header>
+	<!-- /header -->
+	
+	<main>
+		<section class="hero_single version_4">
+			<div class="wrapper">
+				<div class="container">
+					<h3>Help Find Missing Persons</h3>
+					<p>Join our efforts to locate and reunite individuals missing from the #RejectFinanceBill2024 protests.</p>
+					<form method="post" action="search_results.html">
+						<div class="row g-0 custom-search-input-2">
+							<div class="col-lg-4">
+								<div class="form-group">
+									<input class="form-control" type="text" placeholder="Enter name or description...">
+									<i class="icon_search"></i>
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<div class="form-group">
+									<input class="form-control" type="text" placeholder="Last known location">
+									<i class="icon_pin_alt"></i>
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<select class="wide">
+									<option>All Categories</option>
+									<option>Men</option>
+									<option>Women</option>
+									<option>Children</option>
+								</select>
+							</div>
+							<div class="col-lg-2">
+								<input type="submit" value="Search">
+							</div>
+						</div>
+						<!-- /row -->
+					</form>
+					<ul class="counter">
+						<li><strong>1,020</strong> Missing Persons</li>
+						<li><strong>543</strong> Found and Reunited</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+		<!-- /hero_single -->
+		
+
+		<div class="container-fluid margin_80_55">
+            <div class="main_title_2">
+                <span><em></em></span>
+                <h2>Recently Reported Missing Persons</h2>
+                <p>Helping families reunite with their loved ones.</p>
+            </div>
+            <div id="reccomended" class="owl-carousel owl-theme">
+                {% for person in persons %}
+                <div class="item">
+                    <div class="strip grid">
+                        <figure>
+                            <a href="detail-missing-person.html" class="wish_bt"></a>
+                            <a href="detail-missing-person.html">
+                                <img src="{{ person.photo_url }}" class="img-fluid" alt="" width="400" height="266">
+                                <div class="read_more"><span>Read more</span></div>
+                            </a>
+                            <small>Missing Person</small>
+                        </figure>
+                        <div class="wrapper">
+                            <h3><a href="detail-missing-person.html">{{ person.name }}</a></h3>
+                            <p>Last seen near City Park on 10th July 2024. Wearing a blue jacket and jeans.</p>
+                            <a class="address" href="https://www.google.com/maps/dir//City+Park,+Nairobi,+Kenya">Get directions</a>
+                        </div>
+                        <ul>
+                            <li><span class="loc_open">Still Missing</span></li>
+                            <li>
+                                <div class="score"><span>Age<em>{{ person.age }} Years</em></span><strong>{{ person.age }}</strong></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <!-- /carousel -->
+            <div class="container">
+                <div class="btn_home_align"><a href="{{ url_for('all_listing') }}" class="btn_1 rounded">View all</a></div>
+            </div>
+            <!-- /container -->
+        </div>
+        <!-- /container -->
+		
+		<div class="call_section image_bg">
+			<div class="wrapper">
+				<div class="container margin_80_55">
+					<div class="main_title_2">
+						<span><em></em></span>
+						<h2>How It Works</h2>
+						<p>Welcome to the Missing Persons 2024 Antifinance Bill Demonstrations Kenya database. This AI-powered platform is designed to help track and identify individuals who have gone missing during the #RejectFinanceBill2024 protests. Our mission is to assist in reuniting families with their loved ones by providing a centralized and accessible online resource for all Kenyans.</p>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="box_how wow">
+								<i class="pe-7s-search"></i>
+								<h3>Search for Missing Persons</h3>
+								<p>Use our advanced search tools to locate individuals reported missing during the protests. Enter details to find information quickly and accurately.</p>
+								<span></span>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="box_how">
+								<i class="pe-7s-info"></i>
+								<h3>View Detailed Information</h3>
+								<p>Access comprehensive profiles and updates on missing persons. Our database provides essential details to aid in the identification and reunification process.</p>
+								<span></span>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="box_how">
+								<i class="pe-7s-like2"></i>
+								<h3>Report and Connect</h3>
+								<p>Report new cases or connect with other users to share information. Our platform enables community support and collaboration in locating missing individuals.</p>
+							</div>
+						</div>
+					</div>
+					<!-- /row -->
+					<p class="text-center add_top_30 wow bounceIn" data-wow-delay="0.5">
+						<a href="{{ url_for('add_person') }}" class="btn_1 rounded">Report Now</a>
+					</p>
+				</div>
+			</div>
+			<!-- /wrapper -->
+		</div>
+		<!--/call_section-->
+		
+	</main>
+	<!-- /main -->
+
+	<footer class="plus_border">
+		<div class="container margin_60_35">
+			<div class="row justify-content-start">
+				<div class="col-lg-12">
+					<ul id="additional_links">
+						<li><span>© 2024 Missing Persons 2024</span></li>
+					</ul>
+				</div>
+			</div>
+			
+		</div>
+	</footer>
+	<!--/footer-->
+	</div>
+	<!-- page -->
+	
+	<div id="toTop"></div><!-- Back to top button -->
+	
+	<!-- COMMON SCRIPTS -->
+    <script src="{{ url_for('static', filename='js/common_scripts.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/functions.js') }}"></script>
+	<script src="{{ url_for('static', filename='assets/validate.js') }}"></script>
+
+	 
+
 </body>
 </html>

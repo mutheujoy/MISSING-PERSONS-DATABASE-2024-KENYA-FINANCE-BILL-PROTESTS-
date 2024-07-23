@@ -1,9 +1,26 @@
-from flask import render_template, request, redirect, url_for
-from . import db
-from .models import MissingPerson
-from . import create_app
+from flask import Flask, render_template, request, redirect, url_for
+from flask_sqlalchemy import SQLAlchemy
+from app.models import MissingPerson, db
+import os
+from dotenv import load_dotenv
 
-app = create_app()
+load_dotenv()
+
+app = Flask(__name__)
+
+# Get environment variables
+db_user = os.getenv('POSTGRES_USER')
+db_password = os.getenv('POSTGRES_PASSWORD')
+db_host = 'lstdb'
+db_port = os.getenv('POSTGRES_PORT', '5432')
+db_name = os.getenv('POSTGRES_DB')
+
+# Configure SQLAlchemy to use PostgreSQL
+app.config['SQLALCHEMY_DATABASE_URI'] = (
+    f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
+)
+
+db.init_app(app)
 
 @app.route('/')
 def index():
@@ -35,3 +52,8 @@ def add_person():
         return redirect(url_for('index'))
     
     return render_template('add_person.html')
+
+if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
+    app.run(host='0.0.0.0', debug=True)

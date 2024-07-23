@@ -2,22 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Missing Persons Database</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Missing Persons Database</h1>
-    <a href="{{ url_for('add_person') }}">Add Missing Person</a>
-    <ul>
-        {% for person in persons %}
-        <li>
-            <h2>{{ person.name }} ({{ person.age }})</h2>
-            <img src="{{ person.photo_url }}" alt="{{ person.name }}" width="100">
-            <p>Occupation: {{ person.occupation }}</p>
-            <p>Last Known Location: {{ person.last_known_location }}</p>
-            <p>Contact Info: {{ person.contact_info }}</p>
-        </li>
-        {% endfor %}
-    </ul>
+    <header class="bg-dark text-white text-center py-3">
+        <h1>Missing Persons Database</h1>
+        <a href="{{ url_for('add_person') }}" class="btn btn-primary mt-2">Add Missing Person</a>
+    </header>
+    <main class="container my-4">
+        <div class="row">
+            {% for person in persons %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ url_for('get_image', person_id=person.id) }}" alt="{{ person.name }}" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ person.name }} ({{ person.age }})</h5>
+                        <p class="card-text">Occupation: {{ person.occupation }}</p>
+                        <p class="card-text">Last Known Location: {{ person.last_known_location }}</p>
+                        <p class="card-text">Contact Info: {{ person.contact_info }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

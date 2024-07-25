@@ -2,15 +2,15 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///missing_persons.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:pa55word@localhost/missing_persons'
 db = SQLAlchemy(app)
 
-from models import MissingPerson
+from Models import MissingPerson
 
 @app.route('/')
 def index():
     persons = MissingPerson.query.all()
-    return render_template('index.html', persons=persons)
+    return render_template('app/index.html', persons=persons)
 
 @app.route('/add', methods=['GET', 'POST'])
 def add_person():
@@ -36,7 +36,7 @@ def add_person():
         
         return redirect(url_for('index'))
     
-    return render_template('add_person.html')
+    return render_template('register_users/add_person.html')
 
 if __name__ == '__main__':
     db.create_all()

@@ -11,6 +11,16 @@ def index():
     persons = MissingPerson.query.all()
     return render_template("index.html", persons=persons)
 
+@app.route("/all")
+def all_listing():
+    persons = MissingPerson.query.all()
+    return render_template("all-missing-persons.html", persons=persons)
+
+@app.route("/gallery")
+def gallery():
+    persons = MissingPerson.query.all()
+    return render_template("gallery.html", persons=persons)
+
 
 @app.route("/add", methods=["GET", "POST"])
 def add_person():
@@ -37,3 +47,6 @@ def add_person():
         return redirect(url_for("index"))
 
     return render_template("add_person.html")
+
+if __name__ == "__main__":
+    app.run(debug=True)

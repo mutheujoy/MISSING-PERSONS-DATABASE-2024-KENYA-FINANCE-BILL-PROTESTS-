@@ -34,13 +34,13 @@ def index():
 @app.route('/add', methods=['GET', 'POST'])
 def add_person():
     if request.method == 'POST':
-        name = request.form['name']
-        age = request.form['age']
-        photo = request.files['photo']
-        photo_url = request.form["photo"]
-        occupation = request.form['occupation']
-        last_known_location = request.form['last_known_location']
-        contact_info = request.form['contact_info']
+        name = request.form.get('name')
+        age = request.form.get('age')
+        photo = request.files.get('photo')
+        photo_url = request.form.get("photo")
+        occupation = request.form.get('occupation')
+        last_known_location = request.form.get('last_known_location')
+        contact_info = request.form.get('contact_info')
 
         photo_data = None
         if photo_url:

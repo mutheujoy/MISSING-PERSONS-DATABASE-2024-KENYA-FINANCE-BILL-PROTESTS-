@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from datetime import date
 
 db = SQLAlchemy()
 
@@ -13,3 +14,12 @@ class MissingPerson(db.Model):
     
     def __repr__(self):
         return f'<MissingPerson {self.name}>'
+
+class WhatsAppSessions(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    date_created = db.Column(db.Date, nullable=False, default=date.today)
+    phone = db.Column(db.String(100), nullable=False, unique=True)
+    session_text = db.Column(db.String(10000), nullable=True)
+    
+    def __repr__(self):
+        return f'<WhatsAppSessions {self.name}>'

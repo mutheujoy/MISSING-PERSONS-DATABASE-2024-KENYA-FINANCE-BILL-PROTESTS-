@@ -1,0 +1,32 @@
+    {% include 'includes/navbar.html' %}
+    <div class="container">
+        <h1 class="mb-4">Add Missing Person</h1>
+        <form method="POST">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name:</label>
+                <input type="text" id="name" name="name" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="age" class="form-label">Age:</label>
+                <input type="number" id="age" name="age" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="photo_url" class="form-label">Photo URL:</label>
+                <input type="url" id="photo_url" name="photo_url" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="occupation" class="form-label">Occupation:</label>
+                <input type="text" id="occupation" name="occupation" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="last_known_location" class="form-label">Last Known Location:</label>
+                <input type="text" id="last_known_location" name="last_known_location" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="contact_info" class="form-label">Contact Info:</label>
+                <input type="text" id="contact_info" name="contact_info" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    {% include 'includes/footer.html' %}

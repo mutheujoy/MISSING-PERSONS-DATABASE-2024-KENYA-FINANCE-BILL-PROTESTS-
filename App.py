@@ -1,6 +1,8 @@
 from flask import render_template, request, redirect, url_for
 from app import db, create_app
 from app.models import MissingPerson
+from app.models import MonitorPersons
+
 
 
 app = create_app()
@@ -37,3 +39,31 @@ def add_person():
         return redirect(url_for("index"))
 
     return render_template("add_person.html")
+
+@app.route("/monitor", methods=["GET", "POST"])
+def add_monitor_info():
+    if request.method == "POST":
+        print(request.form) 
+        missing_person_monitor_id = request.form.get("missing_person_monitor_id")
+        photo_url = request.form["photo_url"]
+        last_known_location = request.form["last_known_location"]
+
+        monitor_person = MonitorPersons(
+            missing_person_monitor_id = missing_person_monitor_id,
+            photo_url=photo_url,
+            last_known_location=last_known_location,
+        )
+
+        db.session.add(monitor_person)
+        db.session.commit()
+
+
+        return redirect(url_for("index"))
+    persons = MissingPerson.query.all()
+
+    return render_template("monitor_person.html", persons = persons)
+
+
+
+
+

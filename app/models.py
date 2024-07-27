@@ -15,6 +15,31 @@ class MissingPerson(db.Model):
     def __repr__(self):
         return f'<MissingPerson {self.name}>'
 
+'''
+{
+      "id": 125,
+      "name": "Peter Arinaitwe",
+      "nickname": null,
+      "gender": "Male",
+      "x_handle_full": "https:://x.com/N/A",
+      "x_handle": "N/A",
+      "photo_url": "/static/images/image_of_person.jpg",
+      "status": "Remanded",
+      "holding_location": "Luzira Prison",
+      "last_known_location": "Unknown",
+      "security_organ": "Police",
+      "time_taken": null,
+      "time_taken_formatted": null,
+      "notes": null,
+      "remanded_from": null,
+      "remanded_to": null,
+      "remanded_by": null,
+      "remanded_on": null,
+      "remanded_until": null,
+      "released_on": null
+    }
+'''
+
 class WhatsAppSessions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date_created = db.Column(db.Date, nullable=False, default=date.today)

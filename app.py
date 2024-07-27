@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, send_file, Response
+from flask import Flask, render_template, request, redirect, url_for, send_file, Response, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from app.models import MissingPerson, WhatsAppSessions, db
 import os
@@ -39,6 +39,370 @@ def analytics():
 @app.route('/cookies')
 def cookies():
     return render_template('cookies.html')
+
+# /api/victim-statistics
+@app.route('/api/victim-statistics', methods = ["GET"])
+def api_victim_statistics():
+    data = {
+        "data": {
+            "gender": {
+                "Male": 102,
+                "Female": 23
+            },
+            "status": {
+                "Released": 18,
+                "Remanded": 80,
+                "Arrested": 26,
+                "Missing": 1
+            },
+            "security_organs": {
+                "Police": 120,
+                "Joint Forces": 4,
+                "Unknown": 1
+            },
+            "holding_locations": {
+                "Luzira Prison": 76,
+                "Unknown": 24,
+                "Kampala CPS": 3,
+                "Parliamentary Avenue Police Station": 2,
+                "Kiira Road Police Station": 1,
+                "Kitalya": 1,
+                "Jinja Road Police Station": 1,
+                "Natete Police Station": 1
+            }
+        }
+    }
+
+    return jsonify(data)
+
+@app.route('/api/victims', methods = ["GET"])
+def api_victims():
+    per_page = request.args.get('per_page')
+
+    data = {
+        "data": [
+            {
+            "id": 1,
+            "name": "Reign Kasozi",
+            "nickname": None,
+            "gender": "Male",
+            "x_handle_full": "https:://x.com/maulanareign256",
+            "x_handle": "@maulanareign256",
+            "photo_url": "https://dashboard.missingpersonsug.org/media/reign_maulana.jpg",
+            "status": "Released",
+            "holding_location": None,
+            "last_known_location": "Mutundwe, Rubaga",
+            "security_organ": "Police",
+            "time_taken": None,
+            "time_taken_formatted": None,
+            "notes": None,
+            "remanded_from": None,
+            "remanded_to": None,
+            "remanded_by": None,
+            "remanded_on": None,
+            "remanded_until": None,
+            "released_on": None
+            },
+            {
+            "id": 2,
+            "name": "Faiza Salima",
+            "nickname": None,
+            "gender": "Female",
+            "x_handle_full": "https:://x.com/Faizafabz",
+            "x_handle": "@Faizafabz",
+            "photo_url": "https://dashboard.missingpersonsug.org/media/faiza_fab.jpg",
+            "status": "Remanded",
+            "holding_location": "Luzira Prison",
+            "last_known_location": "Oasis Mall",
+            "security_organ": "Police",
+            "time_taken": "10:19 23-07-2024",
+            "time_taken_formatted": "Tue, Jul 23, 2024 10:19 AM",
+            "notes": None,
+            "remanded_from": None,
+            "remanded_to": None,
+            "remanded_by": None,
+            "remanded_on": None,
+            "remanded_until": None,
+            "released_on": None
+            },
+            {
+            "id": 3,
+            "name": "Thomas Kanzira",
+            "nickname": None,
+            "gender": "Male",
+            "x_handle_full": "https:://x.com/Owishemwe",
+            "x_handle": "@Owishemwe",
+            "photo_url": "https://dashboard.missingpersonsug.org/media/thomas_oweishemwe.png",
+            "status": "Remanded",
+            "holding_location": "Luzira Prison",
+            "last_known_location": "Oasis Mall",
+            "security_organ": "Police",
+            "time_taken": "10:19 23-07-2024",
+            "time_taken_formatted": "Tue, Jul 23, 2024 10:19 AM",
+            "notes": None,
+            "remanded_from": None,
+            "remanded_to": None,
+            "remanded_by": None,
+            "remanded_on": None,
+            "remanded_until": None,
+            "released_on": None
+            },
+            {
+            "id": 4,
+            "name": "Edgar Hamala",
+            "nickname": None,
+            "gender": "Male",
+            "x_handle_full": "https:://x.com/4baronedgar8",
+            "x_handle": "@4baronedgar8",
+            "photo_url": "https://dashboard.missingpersonsug.org/media/baron_edgar.jpg",
+            "status": "Remanded",
+            "holding_location": "Luzira Prison",
+            "last_known_location": "Oasis Mall",
+            "security_organ": "Police",
+            "time_taken": "10:19 23-07-2024",
+            "time_taken_formatted": "Tue, Jul 23, 2024 10:19 AM",
+            "notes": None,
+            "remanded_from": None,
+            "remanded_to": None,
+            "remanded_by": None,
+            "remanded_on": None,
+            "remanded_until": None,
+            "released_on": None
+            },
+            {
+            "id": 5,
+            "name": "Bernard Ewalu",
+            "nickname": None,
+            "gender": "Male",
+            "x_handle_full": "https:://x.com/beewol",
+            "x_handle": "@beewol",
+            "photo_url": "https://dashboard.missingpersonsug.org/media/beewol.jpg",
+            "status": "Remanded",
+            "holding_location": "Luzira Prison",
+            "last_known_location": "Oasis Mall",
+            "security_organ": "Police",
+            "time_taken": "10:19 23-07-2024",
+            "time_taken_formatted": "Tue, Jul 23, 2024 10:19 AM",
+            "notes": None,
+            "remanded_from": None,
+            "remanded_to": None,
+            "remanded_by": None,
+            "remanded_on": None,
+            "remanded_until": None,
+            "released_on": None
+            },
+            {
+            "id": 6,
+            "name": "Kennedy Makana",
+            "nickname": None,
+            "gender": "Male",
+            "x_handle_full": "https:://x.com/Makana_Kennedy",
+            "x_handle": "@Makana_Kennedy",
+            "photo_url": "https://dashboard.missingpersonsug.org/media/makana_ken.jpeg",
+            "status": "Remanded",
+            "holding_location": "Luzira Prison",
+            "last_known_location": "Buganda Road Court",
+            "security_organ": "Police",
+            "time_taken": "11:42 23-07-2024",
+            "time_taken_formatted": "Tue, Jul 23, 2024 11:42 AM",
+            "notes": None,
+            "remanded_from": None,
+            "remanded_to": None,
+            "remanded_by": None,
+            "remanded_on": None,
+            "remanded_until": None,
+            "released_on": None
+            },
+            {
+            "id": 7,
+            "name": "Praise Aloikin",
+            "nickname": None,
+            "gender": "Female",
+            "x_handle_full": "https:://x.com/AloikinOpoloje",
+            "x_handle": "@AloikinOpoloje",
+            "photo_url": "https://dashboard.missingpersonsug.org/media/praise_aloikin.jpg",
+            "status": "Remanded",
+            "holding_location": "Luzira Prison",
+            "last_known_location": "Buganda Road Court",
+            "security_organ": "Police",
+            "time_taken": "12:39 23-07-2024",
+            "time_taken_formatted": "Tue, Jul 23, 2024 12:39 PM",
+            "notes": None,
+            "remanded_from": None,
+            "remanded_to": None,
+            "remanded_by": None,
+            "remanded_on": None,
+            "remanded_until": None,
+            "released_on": None
+            },
+            {
+            "id": 7,
+            "name": "Mukwaya Innocent",
+            "nickname": None,
+            "gender": "Male",
+            "x_handle_full": "https:://x.com/N/A",
+            "x_handle": "N/A",
+            "photo_url": "https://dashboard.missingpersonsug.org/media/mukwaya_inno.jpeg",
+            "status": "Arrested",
+            "holding_location": "Parliamentary Avenue Police Station",
+            "last_known_location": "Siad Barre Avenue near Parliament",
+            "security_organ": "Police",
+            "time_taken": "12:09 23-07-2024",
+            "time_taken_formatted": "Tue, Jul 23, 2024 12:09 PM",
+            "notes": None,
+            "remanded_from": None,
+            "remanded_to": None,
+            "remanded_by": None,
+            "remanded_on": None,
+            "remanded_until": None,
+            "released_on": None
+            },
+            {
+            "id": 8,
+            "name": "George V. Othieno",
+            "nickname": None,
+            "gender": "Male",
+            "x_handle_full": "https:://x.com/OtienoGV",
+            "x_handle": "@OtienoGV",
+            "photo_url": "https://dashboard.missingpersonsug.org/media/otieno_victor.jpg",
+            "status": "Remanded",
+            "holding_location": "Luzira Prison",
+            "last_known_location": "Kampala CPS",
+            "security_organ": "Police",
+            "time_taken": None,
+            "time_taken_formatted": None,
+            "notes": None,
+            "remanded_from": None,
+            "remanded_to": None,
+            "remanded_by": None,
+            "remanded_on": None,
+            "remanded_until": None,
+            "released_on": None
+            },
+            {
+            "id": 10,
+            "name": "Peter Ateenyi",
+            "nickname": None,
+            "gender": "Male",
+            "x_handle_full": "https:://x.com/PeterAteenyi",
+            "x_handle": "@PeterAteenyi",
+            "photo_url": "https://dashboard.missingpersonsug.org/media/peter_ateenyi.jpeg",
+            "status": "Released",
+            "holding_location": None,
+            "last_known_location": "Unknown",
+            "security_organ": "Police",
+            "time_taken": None,
+            "time_taken_formatted": None,
+            "notes": None,
+            "remanded_from": None,
+            "remanded_to": None,
+            "remanded_by": None,
+            "remanded_on": None,
+            "remanded_until": None,
+            "released_on": None
+            },
+            {
+            "id": 11,
+            "name": "Tayebwa Jonathan",
+            "nickname": None,
+            "gender": "Male",
+            "x_handle_full": "https:://x.com/TayebwaJonatha3",
+            "x_handle": "@TayebwaJonatha3",
+            "photo_url": "https://dashboard.missingpersonsug.org/media/tayebwajonathan.jpg",
+            "status": "Remanded",
+            "holding_location": "Luzira Prison",
+            "last_known_location": "City Centre",
+            "security_organ": "Police",
+            "time_taken": "14:07 23-07-2024",
+            "time_taken_formatted": "Tue, Jul 23, 2024 2:07 PM",
+            "notes": None,
+            "remanded_from": None,
+            "remanded_to": None,
+            "remanded_by": None,
+            "remanded_on": None,
+            "remanded_until": None,
+            "released_on": None
+            },
+            {
+            "id": 12,
+            "name": "Nwuuza Hamizah Kanyi",
+            "nickname": None,
+            "gender": "Female",
+            "x_handle_full": "https:://x.com/N/A",
+            "x_handle": "N/A",
+            "photo_url": "https://dashboard.missingpersonsug.org/media/image_of_person.jpg",
+            "status": "Remanded",
+            "holding_location": "Luzira Prison",
+            "last_known_location": "Unknown",
+            "security_organ": "Police",
+            "time_taken": None,
+            "time_taken_formatted": None,
+            "notes": None,
+            "remanded_from": None,
+            "remanded_to": None,
+            "remanded_by": None,
+            "remanded_on": None,
+            "remanded_until": None,
+            "released_on": None
+            },
+            {
+            "id": 13,
+            "name": "Katonga Mathia",
+            "nickname": None,
+            "gender": "Male",
+            "x_handle_full": "https:://x.com/N/A",
+            "x_handle": "N/A",
+            "photo_url": "https://dashboard.missingpersonsug.org/media/image_of_person.jpg",
+            "status": "Remanded",
+            "holding_location": "Luzira Prison",
+            "last_known_location": "Unknown",
+            "security_organ": "Police",
+            "time_taken": None,
+            "time_taken_formatted": None,
+            "notes": None,
+            "remanded_from": None,
+            "remanded_to": None,
+            "remanded_by": None,
+            "remanded_on": None,
+            "remanded_until": None,
+            "released_on": None
+            },
+        ],
+        "links": {
+            "first": "/api/victims?per_page=10&page=1",
+            "last": "/api/victims?per_page=10&page=1",
+            "prev": None,
+            "next": None
+        },
+        "meta": {
+            "current_page": 1,
+            "from": 1,
+            "last_page": 1,
+            "links": [
+            {
+                "url": None,
+                "label": "&laquo; Previous",
+                "active": False
+            },
+            {
+                "url": "/api/victims?per_page=10&page=1",
+                "label": "1",
+                "active": True
+            },
+            {
+                "url": None,
+                "label": "Next &raquo;",
+                "active": False
+            }
+            ],
+            "path": "/api/victims",
+            "per_page": 100,
+            "to": 13,
+            "total": 13
+        }
+    }
+
+    return jsonify(data)
 
 @app.route('/add', methods=['GET', 'POST'])
 def add_person():

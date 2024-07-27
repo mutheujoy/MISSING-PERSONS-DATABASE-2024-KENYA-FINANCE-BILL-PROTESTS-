@@ -1,6 +1,6 @@
  
  // Fetch data from JSON file
- const BACKEND_URL = `https://dashboard.missingpersonsug.org/api/victim-statistics`
+ const BACKEND_URL = `/api/victim-statistics`
  fetch(BACKEND_URL)
      .then(response => {
          if (!response.ok) {
@@ -18,7 +18,7 @@
          createChart('genderChart', 'pie', data.gender, 'Gender Distribution');
          createChart('statusChart', 'pie', data.status, 'Status Distribution');
          createChart('holdingLocationChart', 'pie', data.holding_locations, 'Holding Location Distribution');
-         createChart('lastKnownLocationChart', 'pie', data.last_known_location, 'Holding Location Distribution');
+         createChart('securityOrgans', 'pie', data.security_organs, 'Security Organs');
      })
      .catch(error => console.error('Error fetching JSON data:', error));
 
@@ -65,7 +65,7 @@
         "rgba(64, 200, 224, 1)",   // Sky blue
         "rgba(100, 210, 80, 1)",   // Green
         ],
-        lastKnownLocationChart: [
+        securityOrgans: [
             "rgba(255, 159, 64, 1)",
             "rgba(199, 199, 199, 1)",
             "rgba(83, 102, 255, 1)",

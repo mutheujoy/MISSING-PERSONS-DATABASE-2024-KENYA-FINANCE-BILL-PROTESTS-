@@ -14,9 +14,10 @@ app = Flask(__name__)
 # Get environment variables
 db_user = os.getenv('POSTGRES_USER')
 db_password = os.getenv('POSTGRES_PASSWORD')
-db_host = 'lstdb'
+db_host = os.getenv('POSTGRES_DB')
 db_port = os.getenv('POSTGRES_PORT', '5432')
 db_name = os.getenv('POSTGRES_DB')
+application_port=int(os.getenv('APP_PORT'))
 
 # Configure SQLAlchemy to use PostgreSQL
 app.config['SQLALCHEMY_DATABASE_URI'] = (
@@ -30,6 +31,14 @@ db.init_app(app)
 def index():
     persons = MissingPerson.query.all()
     return render_template('index.html', persons=persons)
+
+@app.route('/analytics')
+def analytics():
+    return render_template('analytics.html')
+
+@app.route('/cookies')
+def cookies():
+    return render_template('cookies.html')
 
 @app.route('/add', methods=['GET', 'POST'])
 def add_person():
@@ -253,4 +262,4 @@ def process_response():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0', port=application_port, debug=True)

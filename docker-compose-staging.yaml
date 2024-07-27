@@ -1,35 +1,36 @@
 version: '3.8'
 
 services:
-  web:
+  lstwebstg:
     image: python:3.9-slim
-    container_name: flask_app
+    container_name: flask_app_staging
     working_dir: /app
     volumes:
       - .:/app
     build: .
     ports:
-      - 5000:5000
+      - "5002:5002"
     env_file:
       - .env
     networks:
-      - lostinkenyanet
+      - lstmknetstag
     depends_on:
-      - lstdb
+      - lstdbstg
 
-  lstdb:
+  lstdbstg:
     image: postgres:13
-    container_name: postgres_db
+    container_name: postgres_db_staging
     env_file:
       - .env
     volumes:
-      - lostinkenya_postgres_data:/var/lib/postgresql/data
+      - lst_pg_data_stag:/var/lib/postgresql/data
     networks:
-      - lostinkenyanet
+      - lstmknetstag
+
 networks:
-  lostinkenyanet:
+  lstmknetstag:
     driver: bridge
 
 volumes:
-  lostinkenya_postgres_data:
+  lst_pg_data_stag:
     external: true

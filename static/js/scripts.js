@@ -102,21 +102,22 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Function to add counter to categories
     function categoryCounters() {
-        return fetch(`https://dashboard.missingpersonsug.org/api/victim-statistics`)
+        return fetch(`/api/victim-statistics`)
             .then(response => response.json())
             .then(responseBody => {
                 const {data} = responseBody;
                 const {status, gender} = data
-                const {Arrested, Remanded, Released, Missing, Fallen} = status
+                const {Arrested, Abducted, Missing, Charged, Free, Fallen} = status
                 const total = Object.values(gender).reduce((a,b) => a+b, 0)
             
                 const counts = {
                     All: total,
-                    Arrested,
-                    Remanded,
-                    Released,
+                    Arrested: Arrested ? Arrested : 0,
+                    Abducted: Abducted ? Abducted : 0,
+                    Charged: Charged ? Charged : 0,
                     Missing: Missing ? Missing: 0,
-                    Fallen: Fallen ? Fallen :  0
+                    Free: Free ? Free :  0,
+                    Fallen: Fallen ? Fallen : 0
                 };
                 return counts;
             })

@@ -3,32 +3,31 @@ version: '3.8'
 services:
   lstwebstg:
     image: python:3.9-slim
-    container_name: flask_app_staging
+    container_name: lstwebstg
     working_dir: /app
     volumes:
-      - .:/app
+      - ./:/app
     build: .
     ports:
       - "5002:5002"
     env_file:
       - .env
     networks:
-      - lstmknetstag
+      - lstnetstg
     depends_on:
       - lstdbstg
 
   lstdbstg:
     image: postgres:13
-    container_name: postgres_db_staging
+    container_name: lstdbstg
     env_file:
       - .env
     volumes:
       - lst_pg_data_stag:/var/lib/postgresql/data
     networks:
-      - lstmknetstag
-
+      - lstnetstg
 networks:
-  lstmknetstag:
+  lstnetstg:
     driver: bridge
 
 volumes:

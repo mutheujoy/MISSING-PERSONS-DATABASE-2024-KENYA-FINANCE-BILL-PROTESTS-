@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from io import BytesIO
 import re
 import requests
+import datetime
 
 load_dotenv()
 
@@ -14,7 +15,7 @@ app = Flask(__name__)
 # Get environment variables
 db_user = os.getenv('POSTGRES_USER')
 db_password = os.getenv('POSTGRES_PASSWORD')
-db_host = os.getenv('POSTGRES_DB')
+db_host = os.getenv('POSTGRES_DB_HOST')
 db_port = os.getenv('POSTGRES_PORT', '5432')
 db_name = os.getenv('POSTGRES_DB')
 application_port=int(os.getenv('APP_PORT'))
@@ -29,8 +30,7 @@ db.init_app(app)
 
 @app.route('/')
 def index():
-    persons = MissingPerson.query.all()
-    return render_template('index.html', persons=persons)
+    return render_template('index.html')
 
 @app.route('/analytics')
 def analytics():
@@ -43,334 +43,80 @@ def cookies():
 # /api/victim-statistics
 @app.route('/api/victim-statistics', methods = ["GET"])
 def api_victim_statistics():
+    persons = MissingPerson.query.all()
+
     data = {
         "data": {
             "gender": {
-                "Male": 102,
-                "Female": 23
+                "Male": 0,
+                "Female": 0
             },
             "status": {
-                "Released": 18,
-                "Remanded": 80,
-                "Arrested": 26,
-                "Missing": 1
+                "Arrested":0,
+                "Abducted":0,
+                "Missing":0,
+                "Charged":0,
+                "Free": 0,
+                "Fallen":0
             },
             "security_organs": {
-                "Police": 120,
-                "Joint Forces": 4,
-                "Unknown": 1
+                "Police Service (PS)":0,
+                "Directorate of Criminal Investigations (DCI)":0,
+                "Kenya Prisons Service (KPS)":0,
+                "Unknown": 1,
             },
             "holding_locations": {
-                "Luzira Prison": 76,
-                "Unknown": 24,
-                "Kampala CPS": 3,
-                "Parliamentary Avenue Police Station": 2,
-                "Kiira Road Police Station": 1,
-                "Kitalya": 1,
-                "Jinja Road Police Station": 1,
-                "Natete Police Station": 1
+                "Lang'ata Prison": 0,
+                "Unknown": 0,
+                "Industrial Area Prison": 0,
+                "Central Police Station": 0,
+                "Karen Police Station": 0,
+                "Muthangari Police Station": 0,
+                "DCI HQ Kiambu": 0,
+                "Uknown":0
             }
         }
     }
+
+    for person in persons:
+        if person.gender == "Male":
+            data["data"]["gender"]["Male"] += 1
+
+        if person.gender == "Female":
+            data["data"]["gender"]["Female"] += 1
+
+        if person.status == "Abducted":
+            data["data"]["status"]["Abducted/Kidnapped"] += 1
+
+        if person.status == "Missing":
+            data["data"]["status"]["Missing"] += 1
+        
+        if person.status == "Charged":
+            data["data"]["status"]["Charged"] += 1
+
+        if person.status == "Free":
+            data["data"]["status"]["Free"] += 1
+
+        if person.status == "Fallen":
+            data["data"]["status"]["Fallen"] += 1
 
     return jsonify(data)
 
 @app.route('/api/victims', methods = ["GET"])
 def api_victims():
-    per_page = request.args.get('per_page')
+    per_page = request.args.get('per_page', 100)
+    page = request.args.get('page', 1)
 
+    person_data = []
+    persons = MissingPerson.query.all()
+    
     data = {
         "data": [
-            {
-            "id": 1,
-            "name": "Reign Kasozi",
-            "nickname": None,
-            "gender": "Male",
-            "x_handle_full": "https:://x.com/maulanareign256",
-            "x_handle": "@maulanareign256",
-            "photo_url": "https://dashboard.missingpersonsug.org/media/reign_maulana.jpg",
-            "status": "Released",
-            "holding_location": None,
-            "last_known_location": "Mutundwe, Rubaga",
-            "security_organ": "Police",
-            "time_taken": None,
-            "time_taken_formatted": None,
-            "notes": None,
-            "remanded_from": None,
-            "remanded_to": None,
-            "remanded_by": None,
-            "remanded_on": None,
-            "remanded_until": None,
-            "released_on": None
-            },
-            {
-            "id": 2,
-            "name": "Faiza Salima",
-            "nickname": None,
-            "gender": "Female",
-            "x_handle_full": "https:://x.com/Faizafabz",
-            "x_handle": "@Faizafabz",
-            "photo_url": "https://dashboard.missingpersonsug.org/media/faiza_fab.jpg",
-            "status": "Remanded",
-            "holding_location": "Luzira Prison",
-            "last_known_location": "Oasis Mall",
-            "security_organ": "Police",
-            "time_taken": "10:19 23-07-2024",
-            "time_taken_formatted": "Tue, Jul 23, 2024 10:19 AM",
-            "notes": None,
-            "remanded_from": None,
-            "remanded_to": None,
-            "remanded_by": None,
-            "remanded_on": None,
-            "remanded_until": None,
-            "released_on": None
-            },
-            {
-            "id": 3,
-            "name": "Thomas Kanzira",
-            "nickname": None,
-            "gender": "Male",
-            "x_handle_full": "https:://x.com/Owishemwe",
-            "x_handle": "@Owishemwe",
-            "photo_url": "https://dashboard.missingpersonsug.org/media/thomas_oweishemwe.png",
-            "status": "Remanded",
-            "holding_location": "Luzira Prison",
-            "last_known_location": "Oasis Mall",
-            "security_organ": "Police",
-            "time_taken": "10:19 23-07-2024",
-            "time_taken_formatted": "Tue, Jul 23, 2024 10:19 AM",
-            "notes": None,
-            "remanded_from": None,
-            "remanded_to": None,
-            "remanded_by": None,
-            "remanded_on": None,
-            "remanded_until": None,
-            "released_on": None
-            },
-            {
-            "id": 4,
-            "name": "Edgar Hamala",
-            "nickname": None,
-            "gender": "Male",
-            "x_handle_full": "https:://x.com/4baronedgar8",
-            "x_handle": "@4baronedgar8",
-            "photo_url": "https://dashboard.missingpersonsug.org/media/baron_edgar.jpg",
-            "status": "Remanded",
-            "holding_location": "Luzira Prison",
-            "last_known_location": "Oasis Mall",
-            "security_organ": "Police",
-            "time_taken": "10:19 23-07-2024",
-            "time_taken_formatted": "Tue, Jul 23, 2024 10:19 AM",
-            "notes": None,
-            "remanded_from": None,
-            "remanded_to": None,
-            "remanded_by": None,
-            "remanded_on": None,
-            "remanded_until": None,
-            "released_on": None
-            },
-            {
-            "id": 5,
-            "name": "Bernard Ewalu",
-            "nickname": None,
-            "gender": "Male",
-            "x_handle_full": "https:://x.com/beewol",
-            "x_handle": "@beewol",
-            "photo_url": "https://dashboard.missingpersonsug.org/media/beewol.jpg",
-            "status": "Remanded",
-            "holding_location": "Luzira Prison",
-            "last_known_location": "Oasis Mall",
-            "security_organ": "Police",
-            "time_taken": "10:19 23-07-2024",
-            "time_taken_formatted": "Tue, Jul 23, 2024 10:19 AM",
-            "notes": None,
-            "remanded_from": None,
-            "remanded_to": None,
-            "remanded_by": None,
-            "remanded_on": None,
-            "remanded_until": None,
-            "released_on": None
-            },
-            {
-            "id": 6,
-            "name": "Kennedy Makana",
-            "nickname": None,
-            "gender": "Male",
-            "x_handle_full": "https:://x.com/Makana_Kennedy",
-            "x_handle": "@Makana_Kennedy",
-            "photo_url": "https://dashboard.missingpersonsug.org/media/makana_ken.jpeg",
-            "status": "Remanded",
-            "holding_location": "Luzira Prison",
-            "last_known_location": "Buganda Road Court",
-            "security_organ": "Police",
-            "time_taken": "11:42 23-07-2024",
-            "time_taken_formatted": "Tue, Jul 23, 2024 11:42 AM",
-            "notes": None,
-            "remanded_from": None,
-            "remanded_to": None,
-            "remanded_by": None,
-            "remanded_on": None,
-            "remanded_until": None,
-            "released_on": None
-            },
-            {
-            "id": 7,
-            "name": "Praise Aloikin",
-            "nickname": None,
-            "gender": "Female",
-            "x_handle_full": "https:://x.com/AloikinOpoloje",
-            "x_handle": "@AloikinOpoloje",
-            "photo_url": "https://dashboard.missingpersonsug.org/media/praise_aloikin.jpg",
-            "status": "Remanded",
-            "holding_location": "Luzira Prison",
-            "last_known_location": "Buganda Road Court",
-            "security_organ": "Police",
-            "time_taken": "12:39 23-07-2024",
-            "time_taken_formatted": "Tue, Jul 23, 2024 12:39 PM",
-            "notes": None,
-            "remanded_from": None,
-            "remanded_to": None,
-            "remanded_by": None,
-            "remanded_on": None,
-            "remanded_until": None,
-            "released_on": None
-            },
-            {
-            "id": 7,
-            "name": "Mukwaya Innocent",
-            "nickname": None,
-            "gender": "Male",
-            "x_handle_full": "https:://x.com/N/A",
-            "x_handle": "N/A",
-            "photo_url": "https://dashboard.missingpersonsug.org/media/mukwaya_inno.jpeg",
-            "status": "Arrested",
-            "holding_location": "Parliamentary Avenue Police Station",
-            "last_known_location": "Siad Barre Avenue near Parliament",
-            "security_organ": "Police",
-            "time_taken": "12:09 23-07-2024",
-            "time_taken_formatted": "Tue, Jul 23, 2024 12:09 PM",
-            "notes": None,
-            "remanded_from": None,
-            "remanded_to": None,
-            "remanded_by": None,
-            "remanded_on": None,
-            "remanded_until": None,
-            "released_on": None
-            },
-            {
-            "id": 8,
-            "name": "George V. Othieno",
-            "nickname": None,
-            "gender": "Male",
-            "x_handle_full": "https:://x.com/OtienoGV",
-            "x_handle": "@OtienoGV",
-            "photo_url": "https://dashboard.missingpersonsug.org/media/otieno_victor.jpg",
-            "status": "Remanded",
-            "holding_location": "Luzira Prison",
-            "last_known_location": "Kampala CPS",
-            "security_organ": "Police",
-            "time_taken": None,
-            "time_taken_formatted": None,
-            "notes": None,
-            "remanded_from": None,
-            "remanded_to": None,
-            "remanded_by": None,
-            "remanded_on": None,
-            "remanded_until": None,
-            "released_on": None
-            },
-            {
-            "id": 10,
-            "name": "Peter Ateenyi",
-            "nickname": None,
-            "gender": "Male",
-            "x_handle_full": "https:://x.com/PeterAteenyi",
-            "x_handle": "@PeterAteenyi",
-            "photo_url": "https://dashboard.missingpersonsug.org/media/peter_ateenyi.jpeg",
-            "status": "Released",
-            "holding_location": None,
-            "last_known_location": "Unknown",
-            "security_organ": "Police",
-            "time_taken": None,
-            "time_taken_formatted": None,
-            "notes": None,
-            "remanded_from": None,
-            "remanded_to": None,
-            "remanded_by": None,
-            "remanded_on": None,
-            "remanded_until": None,
-            "released_on": None
-            },
-            {
-            "id": 11,
-            "name": "Tayebwa Jonathan",
-            "nickname": None,
-            "gender": "Male",
-            "x_handle_full": "https:://x.com/TayebwaJonatha3",
-            "x_handle": "@TayebwaJonatha3",
-            "photo_url": "https://dashboard.missingpersonsug.org/media/tayebwajonathan.jpg",
-            "status": "Remanded",
-            "holding_location": "Luzira Prison",
-            "last_known_location": "City Centre",
-            "security_organ": "Police",
-            "time_taken": "14:07 23-07-2024",
-            "time_taken_formatted": "Tue, Jul 23, 2024 2:07 PM",
-            "notes": None,
-            "remanded_from": None,
-            "remanded_to": None,
-            "remanded_by": None,
-            "remanded_on": None,
-            "remanded_until": None,
-            "released_on": None
-            },
-            {
-            "id": 12,
-            "name": "Nwuuza Hamizah Kanyi",
-            "nickname": None,
-            "gender": "Female",
-            "x_handle_full": "https:://x.com/N/A",
-            "x_handle": "N/A",
-            "photo_url": "https://dashboard.missingpersonsug.org/media/image_of_person.jpg",
-            "status": "Remanded",
-            "holding_location": "Luzira Prison",
-            "last_known_location": "Unknown",
-            "security_organ": "Police",
-            "time_taken": None,
-            "time_taken_formatted": None,
-            "notes": None,
-            "remanded_from": None,
-            "remanded_to": None,
-            "remanded_by": None,
-            "remanded_on": None,
-            "remanded_until": None,
-            "released_on": None
-            },
-            {
-            "id": 13,
-            "name": "Katonga Mathia",
-            "nickname": None,
-            "gender": "Male",
-            "x_handle_full": "https:://x.com/N/A",
-            "x_handle": "N/A",
-            "photo_url": "https://dashboard.missingpersonsug.org/media/image_of_person.jpg",
-            "status": "Remanded",
-            "holding_location": "Luzira Prison",
-            "last_known_location": "Unknown",
-            "security_organ": "Police",
-            "time_taken": None,
-            "time_taken_formatted": None,
-            "notes": None,
-            "remanded_from": None,
-            "remanded_to": None,
-            "remanded_by": None,
-            "remanded_on": None,
-            "remanded_until": None,
-            "released_on": None
-            },
+    
         ],
         "links": {
-            "first": "/api/victims?per_page=10&page=1",
-            "last": "/api/victims?per_page=10&page=1",
+            "first": "/api/victims?per_page="+str(per_page)+"&page="+str(page),
+            "last": "/api/victims?per_page="+str(per_page)+"&page="+str(page),
             "prev": None,
             "next": None
         },
@@ -396,11 +142,32 @@ def api_victims():
             }
             ],
             "path": "/api/victims",
-            "per_page": 100,
-            "to": 13,
-            "total": 13
+            "per_page": per_page,
+            "to": 0,
+            "total": 0
         }
     }
+
+    for person in persons:
+        data["data"].append({
+            "id": person.id,
+            "name": person.name,
+            "nickname": person.nickname,
+            "gender": person.gender,
+            "x_handle_full": person.x_handle_full,
+            "x_handle": person.x_handle,
+            "photo_url": "/image/"+str(person.id),
+            "status": person.status,
+            "holding_location": person.holding_location,
+            "last_known_location": person.last_known_location,
+            "security_organ": person.security_organ,
+            "time_taken": person.time_taken,
+            "time_taken_formatted": person.time_taken_formatted,
+            "notes": person.notes,
+            "released_on": person.released_on
+        })
+        data["meta"]["to"] += 1
+        data["meta"]["total"] += 1
 
     return jsonify(data)
 
@@ -408,16 +175,31 @@ def api_victims():
 def add_person():
     if request.method == 'POST':
         name = request.form.get('name')
+        nickname = request.form.get('nickname')
+        gender = request.form.get('gender')
+        x_handle = request.form.get('x_handle')
+        x_handle_full = "https://x.com/"+x_handle
+        status = request.form.get('status')
+        holding_location = request.form.get('holding_location')
+        last_known_location = request.form.get('last_known_location')
+        security_organ = request.form.get('security_organ')
+        time_taken = request.form.get('time_taken')
         age = request.form.get('age')
         photo = request.files.get('photo')
         photo_url = request.form.get("photo")
         occupation = request.form.get('occupation')
         last_known_location = request.form.get('last_known_location')
         contact_info = request.form.get('contact_info')
+        
+
+        if time_taken:
+            time_taken = datetime.datetime.strptime(time_taken, '%Y-%m-%dT%H:%M').strftime('%H:%M %d-%m-%Y')
+            time_taken_formatted = datetime.datetime.strptime(time_taken, '%H:%M %d-%m-%Y').strftime('%a, %b %d, %Y %I:%M %p')
+        else:
+            time_taken_formatted = None
 
         photo_data = None
         if photo_url:
-            
             try:
                 response = requests.get(photo_url)
                 response.raise_for_status()
@@ -430,13 +212,21 @@ def add_person():
 
         new_person = MissingPerson(
             name=name,
+            nickname=nickname,
+            gender=gender,
+            x_handle_full=x_handle_full,
+            x_handle=x_handle,
+            status=status,
+            holding_location=holding_location,
+            security_organ=security_organ,
+            time_taken=time_taken,
+            time_taken_formatted=time_taken_formatted,
             age=age,
-            photo=photo_data,  # Store the binary data in the database
+            photo_url=photo_data,  # Store the binary data in the database
             occupation=occupation,
             last_known_location=last_known_location,
             contact_info=contact_info
         )
-        
 
         db.session.add(new_person)
         db.session.commit()
@@ -448,10 +238,10 @@ def add_person():
 @app.route('/image/<int:person_id>')
 def get_image(person_id):
     person = MissingPerson.query.get_or_404(person_id)
-    if person.photo:
-        return send_file(BytesIO(person.photo), mimetype='image/jpeg')  # Adjust MIME type as needed
+    if person.photo_url:
+        return send_file(BytesIO(person.photo_url), mimetype='image/jpeg')  # Adjust MIME type as needed
     else:
-        return redirect(url_for('static', filename='default_image.jpg')) 
+        return redirect(url_for('static', filename='default_image.jpg'))
 
 def is_url(s: str) -> bool:
     return s.lower().startswith(('http://', 'https://', 'ftp://'))
@@ -553,11 +343,15 @@ def process_response():
         "main_zero":"0. Signup\n",
         "main":"1. Report a lost person\n2. Provide updates on a lost person\n3. General news\n4. Chat with AI assistant",
         "report_missing_person":[
-            "Name of the missing person e.g John Doe?",
-            "Age of the missing person e.g 20?",
+            "Name of the victim e.g John Doe?",
+            "Select gender of the victim\n1. Male\n2. Female?",
+            "What is the situation\n1. Arrested\n2. Abducted\n3. Charged\n4. Missing\n5. Fallen",
+            "Whom do you allege is involved\n1. National Police Service (NPS)\n2. DCI\n3. Kenya Prisons (KPS)\n4. Unknown",
+            "When was did it happen e.g 12:00 12-10-2023?",
+            "Age of the victim e.g 20?",
             "Upload a picture or video of the person",
-            "What is the occupation of the lost person e.g student?",
-            "What was his/her last known location e.g JKIA?",
+            "What is the occupation of the victim e.g student?",
+            "What was the victim's last known location e.g JKIA?",
             "How can someone with information reach you e.g 07xxxxxxxx?",
             "Your request has been received and uploaded to https://lostinkenya.org",
         ],
@@ -591,30 +385,41 @@ def process_response():
         elif len(text) == 6:
             return Response(f"{triggerY} {menu_response['report_missing_person'][5]}\n\n{menu_response['back']}\n", status=200, mimetype='text/plain')
         elif len(text) == 7:
+            return Response(f"{triggerY} {menu_response['report_missing_person'][6]}\n\n{menu_response['back']}\n", status=200, mimetype='text/plain')
+        elif len(text) == 8:
+            return Response(f"{triggerY} {menu_response['report_missing_person'][7]}\n\n{menu_response['back']}\n", status=200, mimetype='text/plain')
+        elif len(text) == 9:
+            return Response(f"{triggerY} {menu_response['report_missing_person'][8]}\n\n{menu_response['back']}\n", status=200, mimetype='text/plain')
+        elif len(text) == 10:
+            return Response(f"{triggerY} {menu_response['report_missing_person'][9]}\n\n{menu_response['back']}\n", status=200, mimetype='text/plain')
+        elif len(text) == 11:
             
             current_state = ""
             save_user_session(current_state, user_session["id"])
 
             try:
-                response = requests.get(text[3])
+                response = requests.get(text[7])
                 response.raise_for_status()
                 photo_data = response.content
 
                 new_person = MissingPerson(
                     name=text[1],
-                    age=text[2],
-                    photo=photo_data,
-                    occupation=text[4],
-                    last_known_location=text[5],
-                    contact_info=text[6]
+                    gender=text[2],
+                    status=["Arrested", "Abducted", "Charged", "Missing", "Fallen"][int(text[3])-1],
+                    security_organ=["Police Service (PS)", "Directorate of Criminal Investigations (DCI)", "Kenya Prisons Service (KPS)", "Unknown"][int(text[4])-1],
+                    time_taken=text[5],
+                    age=text[6],
+                    photo_url=photo_data,
+                    occupation=text[8],
+                    last_known_location=text[9],
+                    contact_info=text[10],
+                    time_taken_formatted = datetime.datetime.strptime(text[5], '%H:%M %d-%m-%Y').strftime('%a, %b %d, %Y %I:%M %p')
                 )
                 
                 db.session.add(new_person)
                 db.session.commit()
 
-                # app.logger.debug(new_person)
-
-                return Response(f"{triggerY} {menu_response['report_missing_person'][6]}\n\n{menu_response['back']}\n", status=200, mimetype='text/plain')
+                return Response(f"{triggerY} {menu_response['report_missing_person'][10]}\n\n{menu_response['back']}\n", status=200, mimetype='text/plain')
                 
             except requests.RequestException as e:
                 return Response(f"Error fetching the photo {text[3]}: {e}", status=200, mimetype='text/plain')

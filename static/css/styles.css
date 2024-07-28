@@ -198,10 +198,13 @@ button:hover {
     padding: 0.3rem 1rem;
 }
 
-.card-status.remanded { background-color: var(--yellow); color: var(--black); }
-.card-status.fallen { background-color: var(--red); }
-.card-status.missing { background-color: var(--blue); }
-.card-status.released { background-color: var(--green); }
+.card-status.Arrested { background-color: var(--yellow); color: var(--black); }
+.card-status.Abducted { background-color: var(--red); }
+.card-status.Charged { background-color: var(--blue); }
+.card-status.Missing { background-color: var(--darkred); }
+.card-status.Free { background-color: var(--green); }
+.card-status.Fallen { background-color: var(--red); }
+
 
 .card__info {
     margin-bottom: 1rem;
@@ -290,6 +293,87 @@ button:hover {
 	margin-top: 1rem;
     color: var(--white);
 }
+
+/* Overall card styling */
+.card-form {
+    background-color: var(--card-bg, #ffffff); /* Default to white if variable not set */
+    border-radius: 12px; /* Slightly rounded corners */
+    padding: 2rem; /* Generous padding */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* More pronounced shadow */
+    max-width: 700px; /* Increase card width for more spacious look */
+    margin: auto; /* Center the card */
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    position: relative; /* Position relative for gradient overlay */
+    overflow: hidden; /* Prevent content overflow */
+}
+
+.card-header {
+    font-size: 1.75rem; /* Larger header text */
+    font-weight: 600; /* Semi-bold font weight */
+    margin-bottom: 1.5rem; /* More space below header */
+    text-align: center; /* Center-align text */
+    color: var(--header-color, #333); /* Default color for header */
+}
+
+.card-form-body {
+    font-size: 1rem; /* Standard font size */
+    color: var(--text-color, #555); /* Slightly lighter text color */
+    z-index: 1; /* Ensure content is above the gradient */
+}
+
+/* Form group styling */
+.form-group {
+    margin-bottom: 1.25rem; /* Increased spacing between form elements */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem; /* Space between label and input */
+    font-weight: 500; /* Medium font weight */
+    color: var(--label-color, #FF0); /* Color for labels */
+}
+
+/* Input fields */
+.form-control, .form-control-file {
+    width: 100%; /* Full width inputs */
+    padding: 0.75rem; /* Padding inside input fields */
+    border-radius: 8px; /* Rounded corners */
+    border: 1px solid #ddd; /* Light border */
+    background-color: #f9f9f9; /* Light background color */
+    font-size: 1rem; /* Standard font size */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus, .form-control-file:focus {
+    border-color: #007bff; /* Border color on focus */
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); /* Subtle shadow on focus */
+}
+
+/* Button styling */
+.btn-primary {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    background-color: #007bff; /* Primary button color */
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Darker color on hover */
+    transform: translateY(-2px); /* Slight lift on hover */
+}
+
+.btn-primary:active {
+    background-color: #004085; /* Even darker color on click */
+    transform: translateY(0); /* Reset lift on click */
+}
+
 
 @media screen and (max-width: 480px) {
     .footer-nav {

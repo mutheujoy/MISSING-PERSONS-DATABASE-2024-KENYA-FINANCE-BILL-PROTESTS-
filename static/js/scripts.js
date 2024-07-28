@@ -6,7 +6,7 @@
         .then((response) => response.json())
         .then(responseBody => {
             const card = responseBody.data.find((item) => item.id === id);
-            const text = `NOTICE! This is a missing person: ${card.name}, status: ${card.status}, last seen at ${card.holding_location?card.holding_location: 'Unkown'}. #March2Parliament`;
+            const text = `NOTICE! This is a missing person: ${card.name}, status: ${card.status}, last seen at ${card.holding_location?card.holding_location: 'Unkown'}.`;
             const url = `https://x.com/intent/tweet?text=${encodeURIComponent(text)}`;
             window.open(url, "_blank");
         })

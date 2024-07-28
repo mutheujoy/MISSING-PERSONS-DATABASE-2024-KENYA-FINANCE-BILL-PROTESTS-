@@ -3,15 +3,22 @@ from app import db, create_app
 from app.models import MissingPerson
 from app.models import MonitorPersons
 
-
-
 app = create_app()
-
 
 @app.route("/")
 def index():
     persons = MissingPerson.query.all()
     return render_template("index.html", persons=persons)
+
+@app.route("/all")
+def all_listing():
+    persons = MissingPerson.query.all()
+    return render_template("all-missing-persons.html", persons=persons)
+
+@app.route("/gallery")
+def gallery():
+    persons = MissingPerson.query.all()
+    return render_template("gallery.html", persons=persons)
 
 
 @app.route("/add", methods=["GET", "POST"])
@@ -64,6 +71,5 @@ def add_monitor_info():
     return render_template("monitor_person.html", persons = persons)
 
 
-
-
-
+if __name__ == "__main__":
+    app.run(debug=True)

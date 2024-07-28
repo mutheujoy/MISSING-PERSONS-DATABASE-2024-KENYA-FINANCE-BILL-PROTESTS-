@@ -347,7 +347,7 @@ def process_response():
             "Select gender of the victim\n1. Male\n2. Female?",
             "What is the situation\n1. Arrested\n2. Abducted\n3. Charged\n4. Missing\n5. Fallen",
             "Whom do you allege is involved\n1. National Police Service (NPS)\n2. DCI\n3. Kenya Prisons (KPS)\n4. Unknown",
-            "When was did it happen e.g 12:00 12-10-2023?",
+            "When was did it happen e.g 12-10-2023?",
             "Age of the victim e.g 20?",
             "Upload a picture or video of the person",
             "What is the occupation of the victim e.g student?",
@@ -404,7 +404,7 @@ def process_response():
 
                 new_person = MissingPerson(
                     name=text[1],
-                    gender=text[2],
+                    gender=["Male", "Female"][int(text[2])-1],
                     status=["Arrested", "Abducted", "Charged", "Missing", "Fallen"][int(text[3])-1],
                     security_organ=["Police Service (PS)", "Directorate of Criminal Investigations (DCI)", "Kenya Prisons Service (KPS)", "Unknown"][int(text[4])-1],
                     time_taken=text[5],
@@ -413,7 +413,7 @@ def process_response():
                     occupation=text[8],
                     last_known_location=text[9],
                     contact_info=text[10],
-                    time_taken_formatted = datetime.datetime.strptime(text[5], '%H:%M %d-%m-%Y').strftime('%a, %b %d, %Y %I:%M %p')
+                    time_taken_formatted = datetime.datetime.strptime(text[5], '%d-%m-%Y').strftime('%a, %b %d, %Y %I:%M %p')
                 )
                 
                 db.session.add(new_person)

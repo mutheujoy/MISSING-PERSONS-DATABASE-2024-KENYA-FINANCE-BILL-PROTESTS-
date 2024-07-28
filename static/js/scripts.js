@@ -6,20 +6,34 @@
         .then((response) => response.json())
         .then(responseBody => {
             const card = responseBody.data.find((item) => item.id === id);
-            const text = `NOTICE! This is a missing person: ${card.name}, status: ${card.status}, last seen at ${card.holding_location?card.holding_location: 'Unkown'}. #March2Parliament`;
+            const text = `NOTICE! This is a missing person: ${card.name}, status: ${card.status}, last seen at ${card.holding_location != 'N/A' ?card.holding_location: 'Unkown'}`;
             const url = `https://x.com/intent/tweet?text=${encodeURIComponent(text)}`;
             window.open(url, "_blank");
         })
         .catch((error) => console.error("Error fetching data:", error));
 }
 
- function parseCustomDateFormat(dateString) {
-	 const [time, date] = dateString.split(' ');
-	 const [hours, minutes] = time.split(':').map(Number);
-	 const [day, month, year] = date.split('-').map(Number);
-	 const parsedDate = new Date(year, month - 1, day, hours, minutes);
-	 return parsedDate;
- }
+function parseCustomDateFormat(dateString) {
+    const parts = dateString.split(' ');
+
+    // Default time if not provided
+    let time = '00:00';
+    let date;
+
+    if (parts.length === 2) {
+        // Both time and date are present
+        [time, date] = parts;
+    } else {
+        // Only date is present
+        date = parts[0];
+    }
+
+    const [hours, minutes] = time.split(':').map(Number);
+    const [day, month, year] = date.split('-').map(Number);
+
+    const parsedDate = new Date(year, month - 1, day, hours, minutes);
+    return parsedDate;
+}
 
  // Function to create the cards
  function createCard(card) {

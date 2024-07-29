@@ -1,14 +1,16 @@
-from flask import render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for
+from flask_sqlalchemy import SQLAlchemy
 from app import db, create_app
 from app.models import MissingPerson
 from app.models import MonitorPersons
+
 
 app = create_app()
  
 @app.route('/')
 def index():
     persons = MissingPerson.query.all()
-    return render_template("index.html", persons=persons)
+    return render_template('app/index.html', persons=persons)
 
 @app.route("/all")
 def all_listing():
@@ -45,7 +47,7 @@ def add_person():
         
         return redirect(url_for('index'))
     
-    return render_template('add_person.html')
+    return render_template('register_users/add_person.html')
 
 if __name__ == '__main__':
     with app.app_context():

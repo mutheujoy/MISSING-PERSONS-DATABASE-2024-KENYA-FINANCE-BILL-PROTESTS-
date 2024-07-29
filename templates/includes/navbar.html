@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gen-Zote | Missing Person Database</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Favicon --><link rel="icon" href="{{ url_for('static', filename='/favicon.jpg') }}" type="image/x-icon">
+    <link rel="icon" href="/static/images/favicon.jpg" type="image/jpeg">
+    <style>
+        body {
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        .form-label {
+            font-weight: bold;
+        }
+        .form-control {
+            margin-bottom: 10px;
+        }
+        .btn-primary {
+            width: 100%;
+        }
+    </style>
+    <style>
+        .navbar-custom {
+            background-color: #343a40; /* Dark background */
+        }
+        .navbar-custom .navbar-brand,
+        .navbar-custom .nav-link {
+            color: #ffffff; /* White text color */
+        }
+        .navbar-custom .navbar-brand:hover,
+        .navbar-custom .nav-link:hover {
+            color: #ffc107; /* Yellow text color on hover */
+        }
+        .navbar-custom .form-control {
+            border-radius: 0; /* Remove border radius for consistency */
+        }
+        .navbar-custom .btn-outline-primary {
+            border-color: #ffc107; /* Yellow border */
+            color: #ffc107; /* Yellow text */
+        }
+        .navbar-custom .btn-outline-primary:hover {
+            background-color: #ffc107; /* Yellow background on hover */
+            color: #cab7ac; /* Dark text on hover */
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-custom  bg-success">
+        
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold font-weight-bold text-uppercase" href="/">Lost & Found</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active fw-bold font-weight-bold text-uppercase" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold font-weight-bold text-uppercase" href="/add">Report</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold font-weight-bold text-uppercase" href="/">Search</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold font-weight-bold text-uppercase" href="/add">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold font-weight-bold text-uppercase" href="#/">Contact</a>
+                    </li>
+                </ul>
+                <form class="d-flex ms-auto">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-primary fw-bold font-weight-bold text-uppercase" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    

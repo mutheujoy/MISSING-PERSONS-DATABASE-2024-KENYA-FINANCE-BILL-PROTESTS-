@@ -1,9 +1,13 @@
+from flask import Flask, render_template
+from flask_sqlalchemy import SQLAlchemy
 from flask_sqlalchemy import SQLAlchemy
 from datetime import date
 
 db = SQLAlchemy()
 
 class MissingPerson(db.Model):
+    __tablename__ = 'missing_person'  # Make sure this matches the table name in your database
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     nickname = db.Column(db.String(100), nullable=True, default='N/A')

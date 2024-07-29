@@ -1,35 +1,125 @@
-    {% include 'includes/navbar.html' %}
-    <div class="container-fluid pb-4"></div>
-    <div class="container border border-warning bg-1 bg-tertiary rounded-4">
-        <h1 class="mb-4 text-center p-3 border-bottom border-warning bg-1 bg-tertiary text-uppercase text bold">Add Missing Person</h1>
-        
-        <form method="POST">
-            <div class="mb-3">
+{% include 'includes/navbar.html' %}
+
+<div class="container-fluid pb-4"></div>
+<div class="container border border-warning bg-1 bg-tertiary rounded-4">
+    <h1 class="mb-4 text-center p-3 border-bottom border-warning bg-1 bg-tertiary text-uppercase font-weight-bold">
+        Add Missing Person
+    </h1>
+
+    <form class="col-md-6 offset-md-3" method="POST">
+        <!-- Row 1 -->
+        <div class="row">
+            <div class="mb-3 col-md-6">
                 <label for="name" class="form-label">Name:</label>
                 <input type="text" id="name" name="name" class="form-control" required>
             </div>
-            <div class="mb-3">
-                <label for="age" class="form-label">Age:</label>
-                <input type="number" id="age" name="age" class="form-control" required>
+            <div class="mb-3 col-md-6">
+                <label for="nickname" class="form-label">Nickname:</label>
+                <input type="text" id="nickname" name="nickname" class="form-control">
             </div>
-            <div class="mb-3">
-                <label for="photo_url" class="form-label">Photo URL:</label>
-                <input type="url" id="photo_url" name="photo_url" class="form-control">
+        </div>
+        
+        <!-- Row 2 -->
+        <div class="row">
+            <div class="mb-3 col-md-6">
+                <label for="gender" class="form-label">Gender:</label>
+                <input type="text" id="gender" name="gender" class="form-control" required>
             </div>
-            <div class="mb-3">
-                <label for="occupation" class="form-label">Occupation:</label>
-                <input type="text" id="occupation" name="occupation" class="form-control">
+            <div class="mb-3 col-md-6">
+                <label for="x_handle_full" class="form-label">X Handle Full:</label>
+                <input type="text" id="x_handle_full" name="x_handle_full" class="form-control">
             </div>
-            <div class="mb-3">
+        </div>
+
+        <!-- Row 3 -->
+        <div class="row">
+            <div class="mb-3 col-md-6">
+                <label for="x_handle" class="form-label">X Handle:</label>
+                <input type="text" id="x_handle" name="x_handle" class="form-control">
+            </div>
+            <div class="mb-3 col-md-6">
+                <label for="status" class="form-label">Status:</label>
+                <input type="text" id="status" name="status" class="form-control" required>
+            </div>
+        </div>
+        
+        <!-- Row 4 -->
+        <div class="row">
+            <div class="mb-3 col-md-6">
+                <label for="holding_location" class="form-label">Holding Location:</label>
+                <input type="text" id="holding_location" name="holding_location" class="form-control">
+            </div>
+            <div class="mb-3 col-md-6">
                 <label for="last_known_location" class="form-label">Last Known Location:</label>
                 <input type="text" id="last_known_location" name="last_known_location" class="form-control" required>
             </div>
-            <div class="mb-3">
+        </div>
+
+        <!-- Row 5 -->
+        <div class="row">
+            <div class="mb-3 col-md-6">
+                <label for="photo_url" class="form-label">Photo URL:</label>
+                <input type="url" id="photo_url" name="photo_url" class="form-control">
+            </div>
+            <div class="mb-3 col-md-6">
+                <label for="security_organ" class="form-label">Security Organ:</label>
+                <input type="text" id="security_organ" name="security_organ" class="form-control">
+            </div>
+        </div>
+
+        <!-- Row 6 -->
+        <div class="row">
+            <div class="mb-3 col-md-6">
+                <label for="time_taken" class="form-label">Time Taken:</label>
+                <input type="text" id="time_taken" name="time_taken" class="form-control">
+            </div>
+            <div class="mb-3 col-md-6">
+                <label for="time_taken_formatted" class="form-label">Time Taken Formatted:</label>
+                <input type="text" id="time_taken_formatted" name="time_taken_formatted" class="form-control">
+            </div>
+        </div>
+
+        <!-- Row 7 -->
+        <div class="row">
+            <div class="mb-3 col-md-6">
+                <label for="notes" class="form-label">Notes:</label>
+                <input type="text" id="notes" name="notes" class="form-control">
+            </div>
+            <div class="mb-3 col-md-6">
+                <label for="released_on" class="form-label">Released On:</label>
+                <input type="text" id="released_on" name="released_on" class="form-control" required>
+            </div>
+        </div>
+
+        <!-- Row 8 -->
+        <div class="row">
+            <div class="mb-3 col-md-6">
+                <label for="age" class="form-label">Age:</label>
+                <input type="number" id="age" name="age" class="form-control" required>
+            </div>
+            <div class="mb-3 col-md-6">
+                <label for="occupation" class="form-label">Occupation:</label>
+                <input type="text" id="occupation" name="occupation" class="form-control">
+            </div>
+        </div>
+
+        <!-- Row 9 -->
+        <div class="row">
+            <div class="mb-3 col-md-12">
                 <label for="contact_info" class="form-label">Contact Info:</label>
                 <input type="text" id="contact_info" name="contact_info" class="form-control" required>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <span class="p-2 text-white">$</span>
-        </form>
-    </div>
-    {% include 'includes/footer.html' %}
+        </div>
+
+        <!-- Submit Button -->
+        <div class="row">
+            <button type="submit" class="btn btn-primary col-md-12 p-1">Submit</button>
+
+        </div>
+        <span class="text-center d-block pb-4 pt-2">
+            <a href="/" class="text-decoration-none text-center text-secondary">Back to Missing Persons</a>
+        </span>
+    </form>
+</div>
+
+{% include 'includes/footer.html' %}

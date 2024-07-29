@@ -4,8 +4,8 @@ from app.models import MissingPerson
 from app.models import MonitorPersons
 
 app = create_app()
-
-@app.route("/")
+ 
+@app.route('/')
 def index():
     persons = MissingPerson.query.all()
     return render_template("index.html", persons=persons)
@@ -42,6 +42,15 @@ def add_person():
 
         db.session.add(new_person)
         db.session.commit()
+        
+        return redirect(url_for('index'))
+    
+    return render_template('add_person.html')
+
+if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
+    app.run(debug=True)
 
         return redirect(url_for("index"))
 

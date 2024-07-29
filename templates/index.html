@@ -1,8 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+{% include 'includes/navbar.html' %}
+<!-- Schema Markup data -->
+<script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Missing Persons Kenya",
+    "url": "https://lostinkenya.org",
+    "logo": "https://staging.lostinkenya.org/static/logo-no-background.png",
+    "sameAs": [
+        "",
+        "",
+        "",
+        "",
+        ""
+        ]
+    }
+        </script>
+    <!-- Schema Markup data ends -->
 
-{% include 'head.html' %}
-
+    <!-- Link to external CSS -->
+    <link rel="stylesheet" href="/static/css/styles.css">
 <body>
     <div class="header">
         <h1>Abducted & Missing Persons in Kenya</h1>
@@ -11,7 +30,7 @@
     <div class="content">
         <span class="content__sort-by">Filter by:</span>
         <div class="search-sort">
-            <div class="content__buttons buttons">
+            <div class="content__buttons buttons col-md-8">
                 <button data-category="All" class="active">All</button>
                 <button data-category="Arrested">Arrested</button>
                 <button data-category="Abducted">Abducted</button>

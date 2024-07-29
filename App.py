@@ -1,15 +1,24 @@
 from flask import render_template, request, redirect, url_for
 from app import db, create_app
 from app.models import MissingPerson
-
+from app.models import MonitorPersons
 
 app = create_app()
-
-
-@app.route("/")
+ 
+@app.route('/')
 def index():
     persons = MissingPerson.query.all()
     return render_template("index.html", persons=persons)
+
+@app.route("/all")
+def all_listing():
+    persons = MissingPerson.query.all()
+    return render_template("all-missing-persons.html", persons=persons)
+
+@app.route("/gallery")
+def gallery():
+    persons = MissingPerson.query.all()
+    return render_template("gallery.html", persons=persons)
 
 
 @app.route("/add", methods=["GET", "POST"])
@@ -33,7 +42,43 @@ def add_person():
 
         db.session.add(new_person)
         db.session.commit()
+        
+        return redirect(url_for('index'))
+    
+    return render_template('add_person.html')
+
+if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
+    app.run(debug=True)
 
         return redirect(url_for("index"))
 
     return render_template("add_person.html")
+
+@app.route("/monitor", methods=["GET", "POST"])
+def add_monitor_info():
+    if request.method == "POST":
+        print(request.form) 
+        missing_person_monitor_id = request.form.get("missing_person_monitor_id")
+        photo_url = request.form["photo_url"]
+        last_known_location = request.form["last_known_location"]
+
+        monitor_person = MonitorPersons(
+            missing_person_monitor_id = missing_person_monitor_id,
+            photo_url=photo_url,
+            last_known_location=last_known_location,
+        )
+
+        db.session.add(monitor_person)
+        db.session.commit()
+
+
+        return redirect(url_for("index"))
+    persons = MissingPerson.query.all()
+
+    return render_template("monitor_person.html", persons = persons)
+
+
+if __name__ == "__main__":
+    app.run(debug=True)

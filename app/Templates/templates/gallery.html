@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Missing Persons 2024">
+    <meta name="author" content="Missing Persons 2024">
+    <title>Missing Persons 2024.</title>
+
+     <!-- Favicons-->
+     <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.jpg') }}" type="image/x-icon">
+
+    <!-- GOOGLE WEB FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+
+    <!-- BASE CSS -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+	<link href="{{ url_for('static', filename='css/vendors.css') }}" rel="stylesheet">
+
+    <!-- ALTERNATIVE COLORS CSS -->
+	<link href="#" id="colors" rel="stylesheet">
+
+</head>
+
+<body>
+	
+	<div id="page">
+		
+	<header class="header_in is_sticky menu_fixed">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-12">
+					<div id="logo">
+						<a href="" title="Missing Persons 2024">
+                            <img src="{{ url_for('static', filename='img/logo.jpg') }}" width="105" height="50" alt="" class="logo_normal">
+                        </a>
+					</div>
+				</div>
+				<div class="col-lg-9 col-12">
+                    <ul id="top_menu">
+                        <li><a href="{{ url_for('add_person') }}" class="btn_add">+ Add Missing Person</a></li>
+                    </ul>
+					<!-- /top_menu -->
+					<a href="#menu" class="btn_mobile">
+						<div class="hamburger hamburger--spin" id="hamburger">
+							<div class="hamburger-box">
+								<div class="hamburger-inner"></div>
+							</div>
+						</div>
+					</a>
+                    <nav id="menu" class="main-menu">
+                        <ul>
+                            <li><span><a href="/" target="_parent">Home</a></span></li>
+                            <li><span><a href="{{ url_for('all_listing') }}" target="_parent">Missing Persons List</a></span></li>
+                            <li><span><a href="{{ url_for('gallery') }}" target="_parent">Missing Persons Gallery</a></span></li>
+                        </ul>
+                    </nav>
+				</div>
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->		
+	</header>
+	<!-- /header -->
+	
+	<div class="sub_header_in sticky_header">
+		<div class="container">
+			<h1>Media Gallery</h1>
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /sub_header -->
+	
+	<main>
+		<div class="container margin_60_35">
+			<div class="main_title_2">
+				<span><em></em></span>
+				<h2>Here some pictures ...</h2>
+			</div>
+			<div class="grid-gallery">
+				<ul class="magnific-gallery">
+                    {% for person in persons %}
+					<li>
+						<figure>
+							<img src="{{person.photo_url}}" alt="">
+							<figcaption>
+								<div class="caption-content">
+									<a href="{{person.photo_url}}" title="Photo title" data-effect="mfp-zoom-in">
+										<i class="pe-7s-albums"></i>
+										<p>{{person.name}}</p>
+									</a>
+								</div>
+							</figcaption>
+						</figure>
+					</li>
+                    {% endfor %}
+				</ul>
+			</div>
+			<!-- /grid gallery -->
+		</div>
+		<!-- /container -->
+	</main>
+	<!--/main-->
+	
+	<footer class="plus_border">
+		<div class="container margin_60_35">
+			<div class="row justify-content-start">
+				<div class="col-lg-12">
+					<ul id="additional_links">
+						<li><span>© 2024 Missing Persons 2024</span></li>
+					</ul>
+				</div>
+			</div>
+			
+		</div>
+	</footer>
+	<!--/footer-->
+	</div>
+	<!-- page -->
+	
+	
+	
+	<div id="toTop"></div><!-- Back to top button -->
+	
+	<!-- COMMON SCRIPTS -->
+    <script src="{{ url_for('static', filename='js/common_scripts.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/functions.js') }}"></script>
+	<script src="{{ url_for('static', filename='assets/validate.js') }}"></script>
+
+  
+</body>
+</html>

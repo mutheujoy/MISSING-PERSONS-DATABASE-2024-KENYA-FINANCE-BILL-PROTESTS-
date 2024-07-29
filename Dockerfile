@@ -13,4 +13,4 @@ RUN pip install --no-cache-dir --force-reinstall -r requirements.txt
 
 COPY . .
 
-CMD ["python", "app.py"]
+CMD ["python", "App.py"]

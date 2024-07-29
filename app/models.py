@@ -22,6 +22,7 @@ class MissingPerson(db.Model):
     age = db.Column(db.Integer, nullable=True)
     occupation = db.Column(db.String(250), nullable=True)
     contact_info = db.Column(db.String(250), nullable=False)
+    monitor_persons = db.relationship('MonitorPersons', backref='monitor')
     
     def __repr__(self):
         return f'<MissingPerson {self.name}>'
@@ -34,3 +35,10 @@ class WhatsAppSessions(db.Model):
     
     def __repr__(self):
         return f'<WhatsAppSessions {self.name}>'
+class MonitorPersons(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    missing_person_monitor_id = db.Column(db.Integer, db.ForeignKey('missing_person.id'))
+    photo_url = db.Column(db.String(200), nullable=True)
+    last_known_location = db.Column(db.String(200), nullable=False)
+
+

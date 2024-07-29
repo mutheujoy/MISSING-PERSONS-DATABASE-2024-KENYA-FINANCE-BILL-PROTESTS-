@@ -27,8 +27,17 @@ class DevelopmentConfig(Config):
     TESTING = False
     CSRF_ENABLED = True
 
+class TestingConfig:
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
+    TESTING = True
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    DEBUG = True
+    CSRF_ENABLED = True
+
+
 config = {
     'development': DevelopmentConfig,
-    'production': ProductionConfig
+    'production': ProductionConfig,
+    'testing': TestingConfig
 }
 

@@ -1,5 +1,7 @@
 import os
 import sys
+from flask import Flask
+from flask_migrate import migrate
 import pytest
 
 # Add the root directory of your project to the Python path
@@ -9,17 +11,27 @@ from app import create_app, db
 from app.models import MissingPerson, WhatsAppSessions, MonitorPersons
 
 @pytest.fixture
-def app():
-    app = create_app()
-    app.config.update({
-        "TESTING": True,
-        "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:"  # Use in-memory database for testing
-    })
+def create_app(config_name='development'):
+    app = Flask(__name__)
+    # Default configuration
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+    if config_name == 'testing':
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
+    else:
+        # Assume you have other configurations for 'development', 'production', etc.
+        app.config.from_object(f'config.{config_name.capitalize()}Config')
+
+    db.init_app(app)
+    migrate.init_app(app, db)
+
+    # Register blueprints and other setup
     with app.app_context():
-        db.create_all()
-        yield app
-        db.drop_all()
+        from . import views  # Import views after initializing the app context
+        from . import models  # Import models after initializing the app context
+
+    return app
+
 
 @pytest.fixture
 def client(app):

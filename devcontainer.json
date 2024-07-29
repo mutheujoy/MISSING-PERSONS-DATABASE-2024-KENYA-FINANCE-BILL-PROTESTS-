@@ -1,0 +1,24 @@
+{
+    "name": "Python 3.8 & Jupyter",
+    "dockerFile": "Dockerfile",
+    "extensions": [
+        "ms-python.python",
+        "ms-toolsai.jupyter"
+    ],
+    "settings": {
+        "python.pythonPath": "/usr/local/bin/python",
+        "python.defaultInterpreterPath": "/usr/local/bin/python"
+    },
+    "forwardPorts": [8888],
+    "postCreateCommand": "pip install -r requirements.txt",
+    "remoteUser": "vscode",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+    "workspaceFolder": "/workspace",
+    "customizations": {
+        "codespaces": {
+            "openFiles": [
+                "README.md"
+            ]
+        }
+    }
+}

@@ -65,6 +65,7 @@ This project is licensed under the MIT License.
 
 For any queries or partnerships contact me at (x.com/jojomutheu)
 
-To support this project mpesa me : 0725899698
-
 Thank you for using and supporting the Missing Persons 2024 Antifinance Bill Demonstrations Kenya database. Together, we can make a difference and help reunite families with their loved ones.
+
+Cite this database as: 
+Mutheu, Joy. (2024). Missing Persons National Database Kenya. GitHub. 

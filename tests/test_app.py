@@ -1,9 +1,12 @@
+import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import pytest
 
 app = Flask(__name__)
 db = SQLAlchemy(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("SQLALCHEMY_DATABASE_URI", "sqlite:///:memory:")
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 @pytest.fixture
 def app():

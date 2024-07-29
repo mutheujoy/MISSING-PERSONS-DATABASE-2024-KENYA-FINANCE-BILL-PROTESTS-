@@ -1,0 +1,483 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;900&display=swap");
+
+:root {
+    --red: #cb2929;
+    --blue: #007bff;
+    --green: #28a745;
+    --lightergrey: #444;
+    --lightgrey: #333;
+    --white: #fff;
+    --black: #000000;
+    --yellow: #ffb224;
+    --purple: #8e4ec6;
+    --darkred: #800000;
+    --card-bg: #0a0a0a;
+    --card-hover-bg: #1a1a1a;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Rubik', Arial, sans-serif;
+    background-color: var(--black);
+    color: var(--white);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    color: var(--white);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--purple);
+}
+
+button {
+    cursor: pointer;
+    color: var(--white);
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+}
+
+.header {
+    background-color: var(--lightgrey);
+    padding: 2rem;
+    text-align: center;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.header h2 {
+    font-size: 1.3rem;
+    font-weight: 400;
+}
+
+.filters {
+    max-width: 1400px;
+    width: 95%;
+    margin: 2rem auto 0 auto;
+    padding: 1rem 0;
+}
+
+.search-input {
+	margin: 20px;
+	border-radius: 24px;
+}
+
+.content {
+    flex-grow: 1;
+    max-width: 1400px;
+    width: 95%;
+    margin: 2rem auto;
+    padding: 1rem 0;
+}
+
+.search-sort {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.search-sort input {
+    margin: 1rem 0;
+    font-size: 0.9rem;
+    padding: 0.6rem 1rem;
+}
+
+.filter-and-search {
+    flex:2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    /* margin-bottom: 2rem; */
+}
+
+.filter-and-search input {
+    flex: 1;
+    min-width: 250px;
+    padding: 0.75rem;
+    border-radius: 24px;
+    border: none;
+    font-size: 1rem;
+}
+
+.content__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.content__buttons button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 24px;
+    border: none;
+    background-color: var(--lightergrey);
+    color: var(--white);
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.content__buttons button.active {
+    background-color: var(--blue);
+}
+
+.content__buttons button:hover {
+    background-color: var(--blue);
+    transform: translateY(-2px);
+}
+
+.content__buttons button .badge {
+    background-color: #fff;
+    border-radius: 12px;
+    color: var(--black);
+    padding: 2px 8px;
+    margin-left: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.persons {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+.card {
+    background-color: var(--card-bg);
+    border-radius: 15px;
+    padding: 1.25rem;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card:hover {
+    background-color: var(--card-hover-bg);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+    object-fit: cover;
+    border: 2px solid var(--white);
+}
+
+.card__name {
+    font-size: 1.2rem;
+    margin-bottom: 0.6rem;
+    font-weight: 700;
+}
+
+.card-status {
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+    color: var(--white);
+    background-color: var(--purple);
+    display: inline-block;
+    border-radius: 12px;
+    padding: 0.3rem 1rem;
+}
+
+.card-status.Arrested { background-color: var(--yellow); color: var(--black); }
+.card-status.Abducted { background-color: var(--red); }
+.card-status.Charged { background-color: var(--blue); }
+.card-status.Missing { background-color: var(--darkred); }
+.card-status.Free { background-color: var(--green); }
+.card-status.Fallen { background-color: var(--red); }
+
+
+.card__info {
+    margin-bottom: 1rem;
+}
+
+.card__office, .locations, .card__gender {
+    margin-bottom: 0.6rem;
+    font-size: 0.9rem;
+}
+
+.card__twitter {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    word-break: break-all;
+}
+
+.card__currently {
+    font-size: 0.9rem;
+	margin-bottom: 0.6rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.card__currently-status {
+    font-weight: normal;
+    display: block;
+    margin-top: 0.3rem;
+}
+
+.share-button {
+    background-color: var(--blue);
+    border: none;
+    color: var(--white);
+    padding: 0.7rem;
+    cursor: pointer;
+    border-radius: 20px;
+    width: 100%;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+    margin-top: auto;
+}
+
+.share-button:hover {
+    background-color: #0056b3;
+}
+
+.footer {
+    background-color: var(--lightgrey);
+    padding: 2rem;
+    color: var(--white);
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.footer-nav {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.footer a {
+    color: var(--white);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer a:hover {
+    color: var(--blue);
+}
+
+.copyright, .current-time {
+    margin: 0;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.current-time {
+    font-weight: 500;
+	margin-top: 1rem;
+    color: var(--white);
+}
+
+/* Overall card styling */
+.card-form {
+    background-color: var(--card-bg, #ffffff); /* Default to white if variable not set */
+    border-radius: 12px; /* Slightly rounded corners */
+    padding: 2rem; /* Generous padding */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* More pronounced shadow */
+    max-width: 700px; /* Increase card width for more spacious look */
+    margin: auto; /* Center the card */
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    position: relative; /* Position relative for gradient overlay */
+    overflow: hidden; /* Prevent content overflow */
+}
+
+.card-header {
+    font-size: 1.75rem; /* Larger header text */
+    font-weight: 600; /* Semi-bold font weight */
+    margin-bottom: 1.5rem; /* More space below header */
+    text-align: center; /* Center-align text */
+    color: var(--header-color, #333); /* Default color for header */
+}
+
+.card-form-body {
+    font-size: 1rem; /* Standard font size */
+    color: var(--text-color, #555); /* Slightly lighter text color */
+    z-index: 1; /* Ensure content is above the gradient */
+}
+
+/* Form group styling */
+.form-group {
+    margin-bottom: 1.25rem; /* Increased spacing between form elements */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem; /* Space between label and input */
+    font-weight: 500; /* Medium font weight */
+    color: var(--label-color, #FF0); /* Color for labels */
+}
+
+/* Input fields */
+.form-control, .form-control-file {
+    width: 100%; /* Full width inputs */
+    padding: 0.75rem; /* Padding inside input fields */
+    border-radius: 8px; /* Rounded corners */
+    border: 1px solid #ddd; /* Light border */
+    background-color: #f9f9f9; /* Light background color */
+    font-size: 1rem; /* Standard font size */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus, .form-control-file:focus {
+    border-color: #007bff; /* Border color on focus */
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); /* Subtle shadow on focus */
+}
+
+/* Button styling */
+.btn-primary {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    background-color: #007bff; /* Primary button color */
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Darker color on hover */
+    transform: translateY(-2px); /* Slight lift on hover */
+}
+
+.btn-primary:active {
+    background-color: #004085; /* Even darker color on click */
+    transform: translateY(0); /* Reset lift on click */
+}
+
+
+@media screen and (max-width: 480px) {
+    .footer-nav {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .copyright, .current-time {
+        font-size: 0.8rem;
+    }
+}
+
+.hashtag {
+    font-size: 1.25rem;
+    margin: 1rem 0;
+    font-weight: 700;
+}
+
+.rights {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+@media screen and (max-width: 1400px) {
+    .persons {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .persons {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    }
+}
+
+@media screen and (max-width: 1080px) {
+
+	.search-sort {
+		display: flex;
+		flex-flow: column;
+	}
+}
+
+@media screen and (max-width: 768px) {
+
+    .persons {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+
+    .header h1 {
+        font-size: 2rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .persons {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    }
+
+    .card {
+        padding: 1rem;
+    }
+
+    .card-img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .card__name {
+        font-size: 1rem;
+    }
+
+    .card-status, .card__office, .locations, .card__gender, .card__twitter, .card__currently, .share-button {
+        font-size: 0.8rem;
+    }
+
+    .search-sort input,
+    .content__buttons button {
+        font-size: 0.9rem;
+        padding: 0.6rem 1rem;
+    }
+}
+
+/* spinner */
+.loading {
+	display: flex;
+	justify-content: center;
+    padding: 20px;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 5px solid var(--lightgrey);
+    border-top: 5px solid var(--white);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+canvas {
+    max-height: 400px;
+}

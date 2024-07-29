@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% include 'head.html' %}
+
+<body>
+    <div class="header">
+        <h1>Abducted & Missing Persons in Kenya</h1>
+    </div>
+
+    <div class="content">
+        <span class="content__sort-by">Filter by:</span>
+        <div class="search-sort">
+            <div class="content__buttons buttons">
+                <button data-category="All" class="active">All</button>
+                <button data-category="Arrested">Arrested</button>
+                <button data-category="Abducted">Abducted</button>
+                <button data-category="Charged">Charged</button>
+                <button data-category="Missing">Missing</button>
+                <button data-category="Free">Free</button>
+                <button data-category="Fallen">Fallen</button>
+
+            </div>
+            <input type="text" class="search-input" id="searchInput" placeholder="Search Person's Name...">
+            <a href="/add" class="btn-primary">Add +</a>
+        </div>
+        <div id="persons" class="persons"></div>
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="/static/js/scripts.js"></script>
+    <div w3-include-html="/static/footer-copy.html"></div>
+    <script src="/static/js/include.js"></script>
+    <script src="/static/js/time.js"></script>
+    <script>(
+        function(){
+            function c(){
+                var b=a.contentDocument||a.contentWindow.document;
+                if(b){
+                    var d=b.createElement('script');
+                    d.innerHTML="window.__CF$cv$params={r:'8a9aa0c1eaf18a6b',t:'MTcyMjA2MjMyMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/static/js/main.js';document.getElementsByTagName('head')[0].appendChild(a);";
+                    b.getElementsByTagName('head')[0].appendChild(d)
+                }
+            }
+            if(document.body){
+                var a=document.createElement('iframe');
+                a.height=1;
+                a.width=1;
+                a.style.position='absolute';
+                a.style.top=0;
+                a.style.left=0;
+                a.style.border='none';
+                a.style.visibility='hidden';
+                document.body.appendChild(a);
+                if('loading'!==document.readyState)c();
+                else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);
+                else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();
+    </script>
+</body>
+
+</html>

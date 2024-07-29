@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+{% include 'head.html' %}
+<body>
+    <div class="container">
+        <div class="card-form">
+            <div class="card-header">
+                <h1 class="mb-0">Add Missing Person</h1>
+            </div>
+            <div class="card-form-body">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nickname">Nickname:</label>
+                        <input type="text" id="nickname" name="nickname" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select class="form-control" id="gender" name="gender" required>
+                          <option value="">--select gender--</option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select class="form-control" id="status" name="status" required>
+                          <option value="">--select status--</option>
+                          <option value="Arrested">Arrested</option>
+                          <option value="Abducted">Abducted</option>
+                          <option value="Charged">Charged</option>
+                          <option value="Missing">Missing</option>
+                          <option value="Free">Free</option>
+                          <option value="Fallen">Fallen</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="security_organ">Security Organ</label>
+                        <select class="form-control" id="security_organ" name="security_organ">
+                          <option value="">--select security organ--</option>
+                          <option value="Police Service (PS)">Police Service (PS)</option>
+                          <option value="Directorate of Criminal Investigations (DCI)">Directorate of Criminal Investigations (DCI)</option>
+                          <option value="Kenya Prisons Service (KPS)">Kenya Prisons Service (KPS)</option>
+                          <option value="Unknown">Unknown</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="x_handle">X Username:</label>
+                        <input type="text" id="x_handle" name="x_handle" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="time_taken">Time Taken:</label>
+                        <input type="datetime-local" id="time_taken" name="time_taken" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Age:</label>
+                        <input type="number" id="age" name="age" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="photo">Photo:</label>
+                        <input type="file" id="photo" name="photo" class="form-control-file" accept="image/*">
+                    </div>
+                    <div class="form-group">
+                        <label for="occupation">Occupation:</label>
+                        <input type="text" id="occupation" name="occupation" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="last_known_location">Last Known Location:</label>
+                        <input type="text" id="last_known_location" name="last_known_location" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact_info">Contact Info:</label>
+                        <input type="text" id="contact_info" name="contact_info" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+        
+    </div>
+    <div w3-include-html="/static/footer-copy.html"></div>
+    <script src="/static/js/include.js"></script>
+    <script src="/static/js/time.js"></script>
+    
+</body>
+</html>

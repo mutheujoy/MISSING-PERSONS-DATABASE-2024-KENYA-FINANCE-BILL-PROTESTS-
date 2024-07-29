@@ -4,3 +4,8 @@ env/
 venv/
 instance/
 .webassets-cache
+.git
+*.pyo
+*.pyd
+.env
+.github

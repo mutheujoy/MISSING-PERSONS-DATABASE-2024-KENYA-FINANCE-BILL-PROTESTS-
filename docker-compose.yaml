@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  web:
+    image: python:3.9-slim
+    container_name: flask_app
+    working_dir: /app
+    volumes:
+      - .:/app
+    build: .
+    ports:
+      - 5000:5000
+    env_file:
+      - .env
+    networks:
+      - lostinkenyanet
+    depends_on:
+      - lstdb
+
+  lstdb:
+    image: postgres:13
+    container_name: postgres_db
+    env_file:
+      - .env
+    volumes:
+      - lostinkenya_postgres_data:/var/lib/postgresql/data
+    networks:
+      - lostinkenyanet
+networks:
+  lostinkenyanet:
+    driver: bridge
+
+volumes:
+  lostinkenya_postgres_data:
+    external: true

@@ -3,30 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Missing Person</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 </head>
-<body>
-    <h1>Add Missing Person</h1>
-    <form method="POST">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-        <br>
-        <label for="age">Age:</label>
-        <input type="number" id="age" name="age" required>
-        <br>
-        <label for="photo_url">Photo URL:</label>
-        <input type="url" id="photo_url" name="photo_url">
-        <br>
-        <label for="occupation">Occupation:</label>
-        <input type="text" id="occupation" name="occupation">
-        <br>
-        <label for="last_known_location">Last Known Location:</label>
-        <input type="text" id="last_known_location" name="last_known_location" required>
-        <br>
-        <label for="contact_info">Contact Info:</label>
-        <input type="text" id="contact_info" name="contact_info" required>
-        <br>
-        <button type="submit">Submit</button>
-    </form>
-</body>
-</html>
+<body class="add_person">
+    <header>
+        <nav>
+          <div class="topnav">
+          <div class="flex-nav">
+            <a href="{{ url_for('add_person') }}">REPORT MISSING</a>
+            <a class="active" href="{{ url_for('index') }}">SEARCH MISSING</a>
+            </div>
+            <div id="logo" class="flex-nav"><img src="missinglogo.png" alt="Home"/></div>
+            <div class="flex-nav">
+            <input id="srchbar"  type="search" placeholder="Search">
+            </div>
+         </div>
+        </nav>
+    </header>
+        <form method="POST">
+        <h1 style="text-align: center; color: #DA1D22;">REPORT MISSING PERSON</h1>
+        
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <br>
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" required>
+            <br>
+            <label for="photo_url">Photo URL:</label>
+            <input type="url" id="photo_url" name="photo_url">
+            <br>
+            <label for="occupation">Occupation:</label>
+            <input type="text" id="occupation" name="occupation">
+            <br>
+            <label for="last_known_location">Last Known Location:</label>
+            <input type="text" id="last_known_location" name="last_known_location" required>
+            <br>
+            <label for="contact_info">Contact Info:</label>
+            <input type="text" id="contact_info" name="contact_info" required>
+            <br>
+            <button type="submit">Add Missing Person</button>
+        </form>
+    </body>
+    </html>
+    

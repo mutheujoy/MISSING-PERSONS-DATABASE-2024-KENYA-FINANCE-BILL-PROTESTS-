@@ -1,18 +1,33 @@
 import os
 import sys
-from flask import Flask
-from flask_migrate import Migrate
 import pytest
+from flask import Flask
 
-# Add the root directory of your project to the Python path
+# Add the directory containing the app module to the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from app import create_app, db
-from app.models import MissingPerson, WhatsAppSessions, MonitorPersons
+from app import create_app 
+from app.models import db, MissingPerson, WhatsAppSessions, MonitorPersons
 
 @pytest.fixture
 def app():
-    app = create_app('testing')  # Pass 'testing' to use the testing configuration
+    app = create_app()
+    app.config.update({
+        "TESTING": True,
+        "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:",  # Use in-memory database for testing
+        "SQLALCHEMY_ENGINE_OPTIONS": {
+            "pool_size": 5,
+            "max_overflow": 10,
+            "pool_timeout": 30,
+        }
+    })
+
+    # Remove deprecated SQLAlchemy configurations
+    if app.config["SQLALCHEMY_DATABASE_URI"].startswith("sqlite"):
+        app.config.pop("SQLALCHEMY_POOL_SIZE", None)
+        app.config.pop("SQLALCHEMY_POOL_TIMEOUT", None)
+        app.config.pop("SQLALCHEMY_MAX_OVERFLOW", None)
+
     with app.app_context():
         db.create_all()
         yield app

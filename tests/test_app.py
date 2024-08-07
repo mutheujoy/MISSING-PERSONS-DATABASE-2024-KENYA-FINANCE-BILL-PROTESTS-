@@ -1,23 +1,34 @@
 import os
 import sys
-from flask import Flask
-from flask_migrate import Migrate
 import pytest
+from flask import Flask
 
-# Add the root directory of your project to the Python path
+# Add the directory containing the app module to the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from app import create_app, db
-from app.models import MissingPerson, WhatsAppSessions, MonitorPersons
+from app import create_app 
+from app.models import db, MissingPerson, WhatsAppSessions, MonitorPersons
 
 @pytest.fixture
-def app():
-    app = create_app('testing')  # Pass 'testing' to use the testing configuration
-    with app.app_context():
-        db.create_all()
-        yield app
-        db.session.remove()
-        db.drop_all()
+def create_app():
+    app = Flask(__name__)
+    app.config.update({
+        "SQLALCHEMY_DATABASE_URI": "postgresql://postgres:pa55word@localhost/missing_persons",
+        "SQLALCHEMY_ENGINE_OPTIONS": {
+            "pool_size": 5,
+            "max_overflow": 10,
+            "pool_timeout": 30,
+        }
+    })
+
+    # Handle deprecated configurations
+    deprecated_options = ['SQLALCHEMY_POOL_SIZE', 'SQLALCHEMY_POOL_TIMEOUT', 'SQLALCHEMY_MAX_OVERFLOW']
+    for option in deprecated_options:
+        if option in app.config:
+            app.config.pop(option)
+
+    db.init_app(app)
+    return app
 
 @pytest.fixture
 def client(app):

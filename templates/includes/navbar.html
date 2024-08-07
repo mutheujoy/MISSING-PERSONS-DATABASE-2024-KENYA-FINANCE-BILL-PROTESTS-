@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% include 'head.html' %}
-
+    <title>Gen-Zote | Missing Person Database</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <!-- Favicon --><link rel="icon" href="{{ url_for('static', filename='/favicon.jpg') }}" type="image/x-icon">
+    <link rel="icon" href="/static/images/favicon.jpg" type="image/jpeg">
     <style>
         body {
             padding: 20px;
@@ -32,7 +31,7 @@
     </style>
     <style>
         .navbar-custom {
-            background-color: #011301; /* Dark background */
+            background-color: #343a40; /* Dark background */
         }
         .navbar-custom .navbar-brand,
         .navbar-custom .nav-link {
@@ -56,22 +55,22 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-custom  bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-custom  bg-success">
         
         <div class="container-fluid">
             <a class="navbar-brand fw-bold font-weight-bold text-uppercase" href="/">Lost & Found</a>
-            <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active fw-bold font-weight-bold text-uppercase" aria-current="page" href="/">Home</a>
+                        <a class="nav-link active fw-bold font-weight-bold text-uppercase" aria-current="page" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-bold font-weight-bold text-uppercase" href="/analytics">Analytics</a>
+                        <a class="nav-link fw-bold font-weight-bold text-uppercase" href="/add">Report</a>
                     </li>
-                    <li class="nav-item">                 
+                    <li class="nav-item">
                         <a class="nav-link fw-bold font-weight-bold text-uppercase" href="/">Search</a>
                     </li>
                     <li class="nav-item">
@@ -82,7 +81,8 @@
                     </li>
                 </ul>
                 <form class="d-flex ms-auto">
-                    <input type="text search" class="search-input form-control" id="searchInput" placeholder="Search Person's Name...">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-primary fw-bold font-weight-bold text-uppercase" type="submit">Search</button>
                 </form>
             </div>
         </div>

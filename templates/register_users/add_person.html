@@ -6,7 +6,7 @@
         Add Missing Person
     </h1>
 
-    <form class="container col-md-8 my-4" method="POST">
+    <form class="col-md-6 offset-md-3" method="POST">
         <!-- Row 1 -->
         <div class="row">
             <div class="mb-3 col-md-6">
@@ -23,18 +23,14 @@
         <div class="row">
             <div class="mb-3 col-md-6">
                 <label for="gender" class="form-label">Gender:</label>
-                <select class="form-control" id="gender" name="gender" required>
-                    <option value="">--select gender--</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                </select>
+                <input type="text" id="gender" name="gender" class="form-control" required>
             </div>
             <div class="mb-3 col-md-6">
                 <label for="x_handle_full" class="form-label">X Handle Full:</label>
                 <input type="text" id="x_handle_full" name="x_handle_full" class="form-control">
             </div>
         </div>
-    
+
         <!-- Row 3 -->
         <div class="row">
             <div class="mb-3 col-md-6">
@@ -43,15 +39,7 @@
             </div>
             <div class="mb-3 col-md-6">
                 <label for="status" class="form-label">Status:</label>
-                <select class="form-control" id="status" name="status" required>
-                    <option value="">--select status--</option>
-                    <option value="Arrested">Arrested</option>
-                    <option value="Abducted">Abducted</option>
-                    <option value="Charged">Charged</option>
-                    <option value="Missing">Missing</option>
-                    <option value="Free">Free</option>
-                    <option value="Fallen">Fallen</option>
-                </select>
+                <input type="text" id="status" name="status" class="form-control" required>
             </div>
         </div>
         
@@ -66,74 +54,72 @@
                 <input type="text" id="last_known_location" name="last_known_location" class="form-control" required>
             </div>
         </div>
-    
+
         <!-- Row 5 -->
         <div class="row">
             <div class="mb-3 col-md-6">
                 <label for="photo_url" class="form-label">Photo URL:</label>
-                <input type="file" id="photo" name="photo" class="form-control-file form-control" accept="image/*">
+                <input type="url" id="photo_url" name="photo_url" class="form-control">
             </div>
             <div class="mb-3 col-md-6">
                 <label for="security_organ" class="form-label">Security Organ:</label>
-                <select class="form-control" id="security_organ" name="security_organ">
-                    <option value="">--select security organ--</option>
-                    <option value="Police Service (PS)">Police Service (PS)</option>
-                    <option value="Directorate of Criminal Investigations (DCI)">Directorate of Criminal Investigations (DCI)</option>
-                    <option value="Kenya Prisons Service (KPS)">Kenya Prisons Service (KPS)</option>
-                    <option value="Unknown">Unknown</option>
-                </select>
+                <input type="text" id="security_organ" name="security_organ" class="form-control">
             </div>
         </div>
-    
+
         <!-- Row 6 -->
         <div class="row">
             <div class="mb-3 col-md-6">
                 <label for="time_taken" class="form-label">Time Taken:</label>
-                <input type="datetime-local" id="time_taken" name="time_taken" class="form-control">
+                <input type="text" id="time_taken" name="time_taken" class="form-control">
             </div>
+            <div class="mb-3 col-md-6">
+                <label for="time_taken_formatted" class="form-label">Time Taken Formatted:</label>
+                <input type="text" id="time_taken_formatted" name="time_taken_formatted" class="form-control">
+            </div>
+        </div>
+
+        <!-- Row 7 -->
+        <div class="row">
             <div class="mb-3 col-md-6">
                 <label for="notes" class="form-label">Notes:</label>
                 <input type="text" id="notes" name="notes" class="form-control">
             </div>
-        </div>
-    
-        <!-- Row 7 -->
-        <div class="row">
             <div class="mb-3 col-md-6">
                 <label for="released_on" class="form-label">Released On:</label>
-                <input type="datetime-local" id="released_on" name="released_on" class="form-control" required>
+                <input type="text" id="released_on" name="released_on" class="form-control" required>
             </div>
+        </div>
+
+        <!-- Row 8 -->
+        <div class="row">
             <div class="mb-3 col-md-6">
                 <label for="age" class="form-label">Age:</label>
                 <input type="number" id="age" name="age" class="form-control" required>
             </div>
-        </div>
-    
-        <!-- Row 8 -->
-        <div class="row">
             <div class="mb-3 col-md-6">
                 <label for="occupation" class="form-label">Occupation:</label>
                 <input type="text" id="occupation" name="occupation" class="form-control">
             </div>
-            <div class="mb-3 col-md-6">
+        </div>
+
+        <!-- Row 9 -->
+        <div class="row">
+            <div class="mb-3 col-md-12">
                 <label for="contact_info" class="form-label">Contact Info:</label>
                 <input type="text" id="contact_info" name="contact_info" class="form-control" required>
             </div>
         </div>
-    
+
         <!-- Submit Button -->
         <div class="row">
-            <button type="submit" class="btn btn-primary col-6 mx-auto mb-3">Submit</button>
-        </div>
-    
-        <!-- Back Link -->
-        <div class="row">
-            <span class="text-center d-block pb-4 pt-2 col-12">
-                <a href="/" class="text-decoration-none text-center text-secondary fw-bold fas fa-back">Back to Home</a>
-            </span>
-        </div>
-    </form>
+            <button type="submit" class="btn btn-primary col-md-12 p-1">Submit</button>
 
+        </div>
+        <span class="text-center d-block pb-4 pt-2">
+            <a href="/" class="text-decoration-none text-center text-secondary">Back to Missing Persons</a>
+        </span>
+    </form>
 </div>
 
 {% include 'includes/footer.html' %}

@@ -28,27 +28,20 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB limit
 
 db.init_app(app)
 
-# @app.route('/')
-# def index():
-#     title = "Abducted & Missing Persons in Kenya"
-#     return render_template('index.html', title)
 @app.route('/')
 def index():
-    title = "Abducted & Missing Persons in Kenya"
-    return render_template('index.html', title=title)
+    return render_template('index.html')
 
 @app.route('/analytics')
 def analytics():
-    title = "Abducted & Missing Persons in Kenya"
-    return render_template('analytics.html', title = title)
+    return render_template('analytics.html')
 
 @app.route('/cookies')
 def cookies():
-    title = "Abducted & Missing Persons in Kenya"
-    return render_template('cookies.html', title = title)
+    return render_template('cookies.html')
 
 # /api/victim-statistics
-@app.route('/api/victim-statistics', methods=["GET"])
+@app.route('/api/victim-statistics', methods = ["GET"])
 def api_victim_statistics():
     persons = MissingPerson.query.all()
 
@@ -59,17 +52,17 @@ def api_victim_statistics():
                 "Female": 0
             },
             "status": {
-                "Arrested": 0,
-                "Abducted": 0,
-                "Missing": 0,
-                "Charged": 0,
+                "Arrested":0,
+                "Abducted":0,
+                "Missing":0,
+                "Charged":0,
                 "Free": 0,
-                "Fallen": 0
+                "Fallen":0
             },
             "security_organs": {
-                "Police Service (PS)": 0,
-                "Directorate of Criminal Investigations (DCI)": 0,
-                "Kenya Prisons Service (KPS)": 0,
+                "Police Service (PS)":0,
+                "Directorate of Criminal Investigations (DCI)":0,
+                "Kenya Prisons Service (KPS)":0,
                 "Unknown": 1,
             },
             "holding_locations": {
@@ -80,7 +73,7 @@ def api_victim_statistics():
                 "Karen Police Station": 0,
                 "Muthangari Police Station": 0,
                 "DCI HQ Kiambu": 0,
-                "Uknown": 0
+                "Uknown":0
             }
         }
     }
@@ -92,48 +85,61 @@ def api_victim_statistics():
         if person.gender == "Female":
             data["data"]["gender"]["Female"] += 1
 
-        if person.status in data["data"]["status"]:
-            data["data"]["status"][person.status] += 1
+        if person.status == "Abducted":
+            data["data"]["status"]["Abducted/Kidnapped"] += 1
+
+        if person.status == "Missing":
+            data["data"]["status"]["Missing"] += 1
+        
+        if person.status == "Charged":
+            data["data"]["status"]["Charged"] += 1
+
+        if person.status == "Free":
+            data["data"]["status"]["Free"] += 1
+
+        if person.status == "Fallen":
+            data["data"]["status"]["Fallen"] += 1
 
     return jsonify(data)
 
-@app.route('/api/victims', methods=["GET"])
+@app.route('/api/victims', methods = ["GET"])
 def api_victims():
-    title = "Victims Data"
-    per_page = int(request.args.get('per_page', 100))
-    page = int(request.args.get('page', 1))
+    per_page = request.args.get('per_page', 100)
+    page = request.args.get('page', 1)
 
+    person_data = []
     persons = MissingPerson.query.all()
     
     data = {
-        "title": title,
-        "data": [],
+        "data": [
+    
+        ],
         "links": {
-            "first": f"/api/victims?per_page={per_page}&page=1",
-            "last": f"/api/victims?per_page={per_page}&page=1",
+            "first": "/api/victims?per_page="+str(per_page)+"&page="+str(page),
+            "last": "/api/victims?per_page="+str(per_page)+"&page="+str(page),
             "prev": None,
             "next": None
         },
         "meta": {
-            "current_page": page,
+            "current_page": 1,
             "from": 1,
             "last_page": 1,
             "links": [
-                {
-                    "url": None,
-                    "label": "&laquo; Previous",
-                    "active": False
-                },
-                {
-                    "url": f"/api/victims?per_page={per_page}&page=1",
-                    "label": "1",
-                    "active": True
-                },
-                {
-                    "url": None,
-                    "label": "Next &raquo;",
-                    "active": False
-                }
+            {
+                "url": None,
+                "label": "&laquo; Previous",
+                "active": False
+            },
+            {
+                "url": "/api/victims?per_page=10&page=1",
+                "label": "1",
+                "active": True
+            },
+            {
+                "url": None,
+                "label": "Next &raquo;",
+                "active": False
+            }
             ],
             "path": "/api/victims",
             "per_page": per_page,
@@ -150,7 +156,7 @@ def api_victims():
             "gender": person.gender,
             "x_handle_full": person.x_handle_full,
             "x_handle": person.x_handle,
-            "photo_url": f"/image/{person.id}",
+            "photo_url": "/image/"+str(person.id),
             "status": person.status,
             "holding_location": person.holding_location,
             "last_known_location": person.last_known_location,
@@ -226,8 +232,8 @@ def add_person():
         db.session.commit()
 
         return redirect(url_for('index'))
-    # 
-    return render_template('register_users/add_person.html')
+    
+    return render_template('add_person.html')
 
 @app.route('/image/<int:person_id>')
 def get_image(person_id):

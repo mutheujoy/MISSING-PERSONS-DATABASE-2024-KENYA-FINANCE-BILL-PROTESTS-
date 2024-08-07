@@ -1,27 +1,21 @@
-#!/usr/bin/env python
-# app/__init__.py
-from flask import Flask, app, config
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask
 from flask_migrate import Migrate
+from app.models import db
+from config.config import config
 
-db = SQLAlchemy()
 migrate = Migrate()
 
 def create_app(config_name='development'):
     app = Flask(__name__)
 
-    # Disable tracking modifications
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['SQLALCHEMY_POOL_SIZE'] = 10
-    app.config['SQLALCHEMY_POOL_TIMEOUT'] = 60
-    app.config['SQLALCHEMY_MAX_OVERFLOW'] = 20
-
     # Load configuration
-    app.config.from_object(f'config.config.{config_name.capitalize()}Config')
+    app.config.from_object(config[config_name])
 
     # Initialize the database
     db.init_app(app)
     migrate.init_app(app, db)
+    #  Debug URI
+    print(f"Using database URI: {app.config['SQLALCHEMY_DATABASE_URI']}")
 
     # Register blueprints and other setup
     with app.app_context():

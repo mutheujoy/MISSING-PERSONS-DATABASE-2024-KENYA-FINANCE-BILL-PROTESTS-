@@ -1,6 +1,5 @@
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
-from flask_sqlalchemy import SQLAlchemy
 from datetime import date
 
 db = SQLAlchemy()
@@ -21,7 +20,7 @@ class MissingPerson(db.Model):
     security_organ = db.Column(db.String(200), nullable=True, default='N/A')
     time_taken = db.Column(db.String(200), nullable=True)
     time_taken_formatted = db.Column(db.String(200), nullable=True)
-    notes = db.Column(db.String(2000), nullable=True,  default='N/A')
+    notes = db.Column(db.String(2000), nullable=True, default='N/A')
     released_on = db.Column(db.String(200), nullable=False, default='N/A')
     age = db.Column(db.Integer, nullable=True)
     occupation = db.Column(db.String(250), nullable=True)
@@ -32,17 +31,21 @@ class MissingPerson(db.Model):
         return f'<MissingPerson {self.name}>'
 
 class WhatsAppSessions(db.Model):
+    __tablename__ = 'whatsapp_sessions'
+
     id = db.Column(db.Integer, primary_key=True)
     date_created = db.Column(db.Date, nullable=False, default=date.today)
     phone = db.Column(db.String(100), nullable=False, unique=True)
     session_text = db.Column(db.String(10000), nullable=True)
     
     def __repr__(self):
-        return f'<WhatsAppSessions {self.name}>'
+        return f'<WhatsAppSessions {self.phone}>'
+
 class MonitorPersons(db.Model):
+    __tablename__ = 'monitor_persons'
+
     id = db.Column(db.Integer, primary_key=True)
     missing_person_monitor_id = db.Column(db.Integer, db.ForeignKey('missing_person.id'))
     photo_url = db.Column(db.String(200), nullable=True)
     last_known_location = db.Column(db.String(200), nullable=False)
-
 

@@ -48,11 +48,11 @@ localhost:5000
 OR
 
 ```env
-https://lostinkenya.com
+https://lostinkenya.org
 ```
 
 OR
 
 ```env
-https://staging.lostinkenya.com
+https://staging.lostinkenya.org
 ```

@@ -16,5 +16,6 @@ setuptools
 spacy
 SQLAlchemy
 tensorflow
+twitter
 typing_extensions
 Werkzeug

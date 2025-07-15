@@ -47,10 +47,15 @@ import os
 #         return redirect(url_for('index'))
     
 #     return render_template('add_person.html')
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for , jsonify, Blueprint, Flask
 from . import db
-from .models import MissingPerson
+from .models import MissingPerson, AuditLog
 from flask import current_app as app
+from sqlalchemy import event, insert, update, select , column , text ,Table, MetaData , inspect
+import json
+
+def serialize(model):
+    return {c.name: getattr(model, c.name) for c in model.__table__.columns}
 
 
 @app.route("/")
@@ -63,7 +68,7 @@ def index():
     except Exception as e:
         app.logger.error(f"Error retrieving missing persons: {e}")
         persons = []
-    return render_template('app/index.html', persons=persons)
+    return render_template('index.html', persons=persons)
 
 
 @app.route("/all")
@@ -111,6 +116,76 @@ def add_person():
             return redirect(url_for('add_person'))
     
     return render_template('register_users/add_person.html')
+@app.route('/edit_missing_person/<int:person_id>')
+def edit_person(person_id):
+    return render_template('edit_person.html', person_id=person_id)
+
+@app.route('/update/<int:person_id>', methods=['POST','PATCH'])
+def update_person(person_id):
+    person_exists = MissingPerson.query.get_or_404(person_id)
+    try:
+        status = request.form.get('status')
+        last_known_location = request.form.get('last_known_location')
+        print(status)
+        print(last_known_location)
+        person_exists.status = status
+        person_exists.last_known_location = last_known_location
+        db.session.add(person_exists)
+        db.session.commit()
+        
+        return redirect(url_for('index'))
+    except Exception as e:
+        db.session.rollback()
+        print(e)
+        app.logger.error(f"Error failing to edit person: {e}")
+        return redirect(url_for('edit_person'))
+
+@event.listens_for(MissingPerson, 'after_insert')
+def after_insert( mapper, connection, target ):
+    stmt = insert(AuditLog).values( table_name='MissingPerson',
+        record_id=target.id,
+        operation='INSERT',
+        new_data=json.dumps(serialize(target)))
+    connection.execute(stmt)
+
+@event.listens_for(MissingPerson, 'after_update')
+def after_update(mapper, connection, target):
+    state = inspect(target)
+    changes = {}
+    for attr in state.attrs.keys():
+        hist = state.attrs[attr].history
+        if hist.has_changes():
+            changes[attr] = {
+                "old": hist.deleted[0] if hist.deleted else None,
+                "new": hist.added[0] if hist.added else None,
+            }
+    stmt = insert(AuditLog).values( 
+        table_name='MissingPerson',
+        record_id=target.id,
+        operation='UPDATE',
+        old_data=json.dumps({k: v["old"] for k, v in changes.items()}),
+        new_data=json.dumps({k: v["new"] for k, v in changes.items()}),
+        )
+    connection.execute(stmt)
+
+@app.route('/regional_heatmap')
+def get_regional_heatmap_data():
+    with db.engine.connect() as conn:
+        conn.execute(text("REFRESH MATERIALIZED VIEW regional_heatmap"))
+    metadata = MetaData()
+    regional_mv = Table("regional_heatmap", metadata, autoload_with=db.engine)
+
+    try:
+        stmt = select(regional_mv)
+        results = db.session.execute(stmt)
+        rows = [dict(row._mapping) for row in results]
+        return jsonify(rows)
+        
+    except Exception as e:
+        app.logger.error(f"Error failing to get data: {e}")
+        return redirect(url_for('index'))
+
+    
 
 if __name__ == '__main__':
     db.create_all()

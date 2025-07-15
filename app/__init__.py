@@ -3,12 +3,12 @@
 from flask import Flask, app, config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-
+import os
 db = SQLAlchemy()
 migrate = Migrate()
 
 def create_app(config_name='development'):
-    app = Flask(__name__)
+    app = Flask(__name__, template_folder=os.path.join('Templates', 'templates'))
 
     # Disable tracking modifications
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

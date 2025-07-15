@@ -1,20 +1,14 @@
 import os
+import sys
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import pytest
-
-app = Flask(__name__)
-db = SQLAlchemy(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("SQLALCHEMY_DATABASE_URI", "sqlite:///:memory:")
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))) #connecting tests folder with root path to allow imports
+from app import db, create_app
 
 @pytest.fixture
 def app():
-    app = app.create_app()
-    app.config.update({
-        "TESTING": True,
-    })
-
+    app = create_app(config_name="test")
     with app.app_context():
         db.create_all()
         yield app

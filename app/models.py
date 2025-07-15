@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_sqlalchemy import SQLAlchemy
-from datetime import date
+from datetime import date, datetime
 
 db = SQLAlchemy()
 
@@ -26,7 +26,8 @@ class MissingPerson(db.Model):
     age = db.Column(db.Integer, nullable=True)
     occupation = db.Column(db.String(250), nullable=True)
     contact_info = db.Column(db.String(250), nullable=False)
-    monitor_persons = db.relationship('MonitorPersons', backref='monitor')
+    sightings = db.relationship('Sightings', back_populates='missing_person', cascade="all, delete-orphan")
+
     
     def __repr__(self):
         return f'<MissingPerson {self.name}>'
@@ -39,10 +40,26 @@ class WhatsAppSessions(db.Model):
     
     def __repr__(self):
         return f'<WhatsAppSessions {self.name}>'
-class MonitorPersons(db.Model):
+    
+class AuditLog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    missing_person_monitor_id = db.Column(db.Integer, db.ForeignKey('missing_person.id'))
+    table_name = db.Column(db.String(50))
+    record_id = db.Column(db.Integer, db.ForeignKey('missing_person.id'))
+    operation = db.Column(db.String(10)) 
+    old_data = db.Column(db.Text, nullable=True)  
+    new_data = db.Column(db.Text, nullable=True )
+    changed_at = db.Column(db.DateTime, default=datetime.now)
+    changed_by = db.Column(db.String(100), nullable=True) 
+
+
+class Sightings(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    missing_person_id = db.Column(db.Integer, db.ForeignKey('missing_person.id'))
     photo_url = db.Column(db.String(200), nullable=True)
     last_known_location = db.Column(db.String(200), nullable=False)
+    status = db.Column(db.String(200), default='pending')
+    timestamp = db.Column(db.DateTime, default=datetime.now())
+    reporter_contact = db.Column(db.String(250), nullable=True)
+    missing_person = db.relationship("MissingPerson", back_populates="sightings")
 
 
